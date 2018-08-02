@@ -1,13 +1,19 @@
-### Initial setup
-- pull the repository and run the following command
-'''
-npm install
-'''
-### Installing new packages:
-'''
-npm i <package-name> --save
-'''
-### To run the code:
-'''
-npm start
-'''
+README:
+
+Usage steps:
+* npm install (installs dependencies from package.json)
+* npm start (should start server)
+
+Installing new packages
+* npm install `package-name` --save (will add to package.json)
+
+
+Branching:
+* git checkout -b `branchname`
+* git branch (to check what branch you're in)
+* `do all your coding in your branch`
+* git pull origin master (pull changes people have potentially made, solves merge conflicts)
+* git merge master (merges master into your branch)
+* git checkout master (change to master branch)
+* git merge `branchname` (merge in the branch you were working on)
+* git push origin master (push to github)
