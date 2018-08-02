@@ -2,7 +2,10 @@ README:
 
 Usage steps:
 * npm install (installs dependencies from package.json)
+* brew install yarn
+* yarn add firebase
 * npm start (should start server)
+
 
 Installing new packages
 * npm install `package-name` --save (will add to package.json)
@@ -17,3 +20,4 @@ Branching:
 * git checkout master (change to master branch)
 * git merge `branchname` (merge in the branch you were working on)
 * git push origin master (push to github)
+
