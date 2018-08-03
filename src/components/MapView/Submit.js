@@ -5,7 +5,7 @@ import { Container, Row, Col } from 'reactstrap';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 import '../../App.css';
-import firebase from "firebase"
+import * as firebase from "firebase";
 
 export default class Submit extends Component {
 
@@ -73,13 +73,13 @@ export default class Submit extends Component {
   }
 
   postPin(event) {
+    console.log("Posting");
     const db = firebase.firestore();
-    const ref = db.collection('pins').doc()
-    const pin_id = ref.id;
+    const settings = {timestampsInSnapshots: true};
+    db.settings(settings);
 
-    console.log(pin_id);
-
-    firebase.database().ref('pins/' + pin_id).set({
+    var pin_ref = db.collection('pins');
+    pin_ref.doc().set({
       description: this.state.description,
       address: this.state.address,
       lat: this.state.lat,
@@ -105,7 +105,7 @@ export default class Submit extends Component {
         <Row>
           <Col xs = "4"></Col>
           <Col xs = "4">
-            <Form onsubmit={this.postPin}>
+            <Form onSubmit={this.postPin}>
               <FormGroup>
                 <Label for="Description">Description</Label>
                 <Input type="textarea" name="text" id="Description" value={this.state.description} onChange={this.handleDescriptionChange}/>
@@ -137,7 +137,7 @@ export default class Submit extends Component {
               <FormGroup>
                 <Input type="textarea" name="tip" id ="tip" placeholder="Any tips?" value={this.state.tip} onChange={this.handleTipChange}/>
               </FormGroup>
-
+              <Button type="submit" color="secondary">Submit</Button>
             </Form>
           </Col>
           <Col xs = "4"></Col>
