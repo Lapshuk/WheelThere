@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import MapWrapper from './MapWrapper';
-import NavHeader from '../../navheader';
+import NavHeader from '../../utils/NavHeader/NavHeader';
 import { Container, Row, Col } from 'reactstrap';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
@@ -24,8 +24,6 @@ export default class Submit extends Component {
                   tip: ''
                 };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleAddressChange = this.handleAddressChange.bind(this);
     this.handleLatChange = this.handleLatChange.bind(this);
@@ -35,9 +33,8 @@ export default class Submit extends Component {
     this.handleRollabilityChange = this.handleRollabilityChange.bind(this);
     this.handleTransportChange = this.handleTransportChange.bind(this);
     this.handleTipChange = this.handleTipChange.bind(this);
-  }
-
     this.postPin = this.postPin.bind(this);
+
   }
 
   handleDescriptionChange(event) {
@@ -74,16 +71,15 @@ export default class Submit extends Component {
   handleTipChange(event) {
       this.setState({tip: event.target.value});
   }
-                // <Input type="Number" name="text" id="fun" placeholder="Fun" />
-                // <Input type="Number" name="text" id="bathroom" placeholder="Bathroom" />
-                // <Input type="Number" name="text" id="rollability" placeholder="Rollability" />
-                // <Input type="Number" name="text" id="transport" placeholder="Transport"/>
 
   postPin(event) {
     const db = firebase.firestore();
-    db.collection('pins').doc()
+    const ref = db.collection('pins').doc()
+    const pin_id = ref.id;
 
-    firebase.database().ref('pins/').set({
+    console.log(pin_id);
+
+    firebase.database().ref('pins/' + pin_id).set({
       description: this.state.description,
       address: this.state.address,
       lat: this.state.lat,
@@ -151,13 +147,3 @@ export default class Submit extends Component {
     );
   }
 }
-// <Col xs = "2">
-// Left panel
-// </Col>
-// <Col xs = "10">
-//
-// </Col>
-
-// <Col xs = "10" style = {{width:'100vw', height:'100vh'}}>
-//  	 		<MapWrapper/>
-// </Col>

@@ -10,11 +10,11 @@ export default class MapView extends Component {
     return (
     	<div>
     		<NavHeader/>
-			<Row>  
+			<Row>
 				<Col xs = "2">
 				Left panel
-				</Col>  
-				<Col xs = "10" style = {{width:'100vw', height:'100vh'}}>     	
+				</Col>
+				<Col xs = "10" style = {{width:'100vw', height:'100vh'}}>
          	 		<MapWrapper/>
          	 	</Col>
           	</Row>
