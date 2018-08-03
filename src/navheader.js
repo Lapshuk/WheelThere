@@ -11,14 +11,12 @@ import { Input } from 'reactstrap';
 import { FaBeer, FaAccessibleIcon, FaGooglePlusSquare} from 'react-icons/fa';
 
 export default class NavHeader extends Component{
-
-
 	render(){
 		return (
-			<div class = "navbar-nav">
-				<Navbar color="light" light expand="md">
+			<div>
+				<Navbar className = "drop-shadow" color="light" light expand="md">
 					<NavbarBrand href="/" className = "mr-auto">
-						<a href= "/"><img style={{width: '30px', height: '30px'}}src = "https://s3-us-west-2.amazonaws.com/badhorserecords/WheelthereIcon1.png"/></a>
+						<a href= "/"><img style={{width: '30px', height: '30px'}}src = "https://s3-us-west-2.amazonaws.com/badhorserecords/WheelthereIcon2.png"/></a>
 						wheelthere
 					</NavbarBrand>
 				    <Nav navbar>
