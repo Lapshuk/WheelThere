@@ -12,7 +12,7 @@ export default class MyAccount extends Component {
                 <NavHeader/>
                 <Row>
                     <Col>
-                        <img src="https://i.ytimg.com/vi/YCaGYUIfdy4/maxresdefault.jpg" style = {{width:'20vw', height:'20vh'}}/>
+                        <img src="https://i.ytimg.com/vi/YCaGYUIfdy4/maxresdefault.jpg" style = {{width:'10vw', height:'15vh', borderRadius: '50%'}}/>
                     </Col>
                         <a href="">edit profile</a>
                 </Row>
