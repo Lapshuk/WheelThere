@@ -21,13 +21,63 @@ export default class Submit extends Component {
                   bathroom: 0,
                   rollability: 0,
                   transport: 0,
-                  tip: '',
-                  tid: props.tid
+                  tip: ''
                 };
 
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    this.handleAddressChange = this.handleAddressChange.bind(this);
+    this.handleLatChange = this.handleLatChange.bind(this);
+    this.handleLonChange = this.handleLonChange.bind(this);
+    this.handleFunChange = this.handleFunChange.bind(this);
+    this.handleBathroomChange = this.handleBathroomChange.bind(this);
+    this.handleRollabilityChange = this.handleRollabilityChange.bind(this);
+    this.handleTransportChange = this.handleTransportChange.bind(this);
+    this.handleTipChange = this.handleTipChange.bind(this);
+  }
 
     this.postPin = this.postPin.bind(this);
   }
+
+  handleDescriptionChange(event) {
+      this.setState({description: event.target.value});
+  }
+
+  handleAddressChange(event) {
+      this.setState({address: event.target.value});
+  }
+  handleLatChange(event) {
+      this.setState({lat: event.target.value});
+  }
+
+  handleLonChange(event) {
+      this.setState({lon: event.target.value});
+  }
+
+  handleFunChange(event) {
+      this.setState({fun: event.target.value});
+  }
+
+  handleBathroomChange(event) {
+      this.setState({bathroom: event.target.value});
+  }
+
+  handleRollabilityChange(event) {
+      this.setState({rollability: event.target.value});
+  }
+
+  handleTransportChange(event) {
+      this.setState({transport: event.target.value});
+  }
+
+  handleTipChange(event) {
+      this.setState({tip: event.target.value});
+  }
+                // <Input type="Number" name="text" id="fun" placeholder="Fun" />
+                // <Input type="Number" name="text" id="bathroom" placeholder="Bathroom" />
+                // <Input type="Number" name="text" id="rollability" placeholder="Rollability" />
+                // <Input type="Number" name="text" id="transport" placeholder="Transport"/>
 
   postPin(event) {
     const db = firebase.firestore();
@@ -62,34 +112,34 @@ export default class Submit extends Component {
             <Form onsubmit={this.postPin}>
               <FormGroup>
                 <Label for="Description">Description</Label>
-                <Input type="textarea" name="text" id="Description" value=this.state.description />
+                <Input type="textarea" name="text" id="Description" value={this.state.description} onChange={this.handleDescriptionChange}/>
               </FormGroup>
 
               <FormGroup>
                 <Label for="Address">Address</Label>
-                <Input type="textarea" name="text" id="Address" value=this.state.address />
+                <Input type="textarea" name="text" id="Address" value={this.state.address} onChange={this.handleAddressChange}/>
               </FormGroup>
 
               <FormGroup>
                 <Label for="Lat">Lat</Label>
-                <Input type="Number" name="text" id="Lat" value=this.state.lat />
+                <Input type="Number" name="text" id="Lat" value={this.state.lat} onChange={this.handleLatChange}/>
               </FormGroup>
 
               <FormGroup>
                 <Label for="Lon">Lon</Label>
-                <Input type="Number" name="text" id="exampleText" value=this.state.lon />
+                <Input type="Number" name="text" id="exampleText" value={this.state.lon} onChange={this.handleLonChange}/>
               </FormGroup>
 
               <FormGroup>
-                <Label for="Access">Accessability</Label>
-                <Input type="Number" name="text" id="fun" placeholder="Fun" value=this.state.fun />
-                <Input type="Number" name="text" id="bathroom" placeholder="Bathroom" value=this.state.bathroom/>
-                <Input type="Number" name="text" id="rollability" placeholder="Rollability" value=this.state.rollability/>
-                <Input type="Number" name="text" id="transport" placeholder="Transport" value=this.state.transport/>
+                <Label for="Access">Accessibility</Label>
+                <Input type="Number" name="text" id="fun" placeholder="Fun" value={this.state.fun} onChange={this.handleFunChange}/>
+                <Input type="Number" name="text" id="bathroom" placeholder="Bathroom" value={this.state.bathroom} onChange={this.handleBathroomChange}/>
+                <Input type="Number" name="text" id="rollability" placeholder="Rollability" value={this.state.rollability} onChange={this.handleRollabilityChange}/>
+                <Input type="Number" name="text" id="transport" placeholder="Transport" value={this.state.transport} onChange={this.handleTransportChange}/>
               </FormGroup>
 
               <FormGroup>
-                <Input type="textarea" name="tip" id ="tip" placeholder="Any tips?" value=this.state.tip/>
+                <Input type="textarea" name="tip" id ="tip" placeholder="Any tips?" value={this.state.tip} onChange={this.handleTipChange}/>
               </FormGroup>
 
             </Form>
