@@ -5,8 +5,6 @@ import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 export class MapWrapper extends Component {
   constructor(props) {
     super(props);
-
-   // const {lat, lng} = this.props.initialCenter;
     this.state = {
       currentLocation: {
         lat: 10.0,
@@ -15,6 +13,7 @@ export class MapWrapper extends Component {
     }
   }
   componentDidMount() {
+    console.log("called");
     this.loadMap();
   }
 
@@ -23,8 +22,6 @@ export class MapWrapper extends Component {
       // google is available
       const {google} = this.props;
       const maps = google.maps;
-
-
       const mapRef = this.refs.map;
       //const node = ReactDOM.findDOMNode(mapRef);
     }
@@ -32,8 +29,9 @@ export class MapWrapper extends Component {
   }
   render() {
     const style = {
-      width: '50vw',
-      height: '50vh'
+      width: '100%',
+      height: '100%',
+      position: 'relative'
     }
     return (
       <Map

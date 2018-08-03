@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import '../../App.css';
 import * as firebase from 'firebase'
+import MyTrips from "../../utils/MyTrips/MyTrips.js";
+import {Container, Row, Col} from 'reactstrap';
+import NavHeader from '../../navheader';
 
 export default class MyAccount extends Component {
 
@@ -33,6 +36,7 @@ export default class MyAccount extends Component {
         //setting state with received data
         this.setState({
           about: data.about,
+          profile_image: data.image,
           email: data.email,
           first_name: data.first_name,
           last_name: data.last_name,
@@ -41,16 +45,41 @@ export default class MyAccount extends Component {
           password: data.password,
           set: true
         });
+        console.log();
       });
     });
   }
 
   render() {
     return (
-
         <div className="App">
-          HELLO FROM MY ACCOUNT
-          {this.state.first_name}
+          <NavHeader/>
+          <Row>
+            <Col>
+              <img src="https://i.ytimg.com/vi/YCaGYUIfdy4/maxresdefault.jpg"
+                   style={{width: '10vw', height: '15vh', borderRadius: '50%'}}/>
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={{size: 'auto', offset: 3}}>
+              <a href="">edit profile</a>
+            </Col>
+          </Row>
+
+          <Col>
+            <h3>{this.state.first_name} {this.state.last_name}</h3>
+            <p>{this.state.my_trips.length} Maps</p>
+            <p>{this.state.about}</p>
+          </Col>
+
+          <Row>
+            <MyTrips/>
+          </Row>
+
+          <Row>
+            <p>Saved Maps</p>
+          </Row>
+          /*Map Objects Here*/
         </div>
     );
   }
