@@ -2,25 +2,34 @@ import React, {Component} from 'react';
 import Draggable from 'react-draggable';
  
 export default class DragIcon extends Component {
- 
-  eventLogger = (e: MouseEvent, data: Object) => {
-    console.log('Event: ', e);
-    console.log('Data: ', data);
-  };
- 
+  constructor(props){
+    super(props);
+    this.handleStop = this.handleStop.bind(this);
+  }
+  handleDrag(e){
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  handleStop(e){
+    console.log('hello');
+    e.preventDefault();
+    e.stopPropagation();
+    console.log(e);
+  }
+  handleStart(e){
+    e.stopPropagation();
+  }
   render() {
     return (
       <Draggable
-        axis="x"
-        handle=".handle"
         defaultPosition={{x: 0, y: 0}}
         position={null}
-        grid={[25, 25]}
         onStart={this.handleStart}
         onDrag={this.handleDrag}
-        onStop={this.handleStop}>
+        onStop={this.handleStop}
+        >
         <div>
-          <img style = {{width: '30px', height: '50px'}} src = "https://i.pinimg.com/originals/f2/57/78/f25778f30e29a96c44c4f72ef645aa63.png"/>
+          <img style = {{position: 'absolute', 'z-index': '99999', width: '30px', height: '50px'}} src = "https://i.pinimg.com/originals/f2/57/78/f25778f30e29a96c44c4f72ef645aa63.png"/>
         </div>
       </Draggable>
     );

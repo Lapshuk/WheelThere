@@ -9,7 +9,7 @@ export default class MapView extends Component {
 
   render() {
     return (
-    	<div>
+    	<div className = "MapViewWrapper">
     		<NavHeader/>
 			<Row>  
 				<Col xs = "2">
