@@ -4,7 +4,7 @@ import * as firebase from 'firebase'
 import MyTrips from "../../utils/MyTrips/MyTrips.js";
 import SavedTrips from "../../utils/SavedTrips/SavedTrips.js";
 import {Container, Row, Col} from 'reactstrap';
-import NavHeader from '../../navheader';
+import NavHeader from '../../utils/NavHeader/NavHeader';
 
 export default class MyAccount extends Component {
 

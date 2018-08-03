@@ -11,6 +11,8 @@ import { Input } from 'reactstrap';
 import { FaBeer, FaAccessibleIcon, FaGooglePlusSquare} from 'react-icons/fa';
 
 export default class NavHeader extends Component{
+
+
 	render(){
 		return (
 			<div>

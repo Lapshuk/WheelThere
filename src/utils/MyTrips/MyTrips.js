@@ -26,12 +26,13 @@ export default class MyTrips extends Component {
       });
     });
   };
-    render() {
-        return (
-            <div className="App">
-                <h6>My Trips</h6>
 
-            </div>
-        );
-    }
+  render() {
+    return (
+        <div className="App">
+          <p>My Trips</p>
+          /*Map Objects Here*/
+        </div>
+    );
+  }
 }
