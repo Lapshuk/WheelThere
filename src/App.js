@@ -8,7 +8,7 @@ import TripDetails from "./components/TripDetails/TripDetails.js"
 import {BrowserRouter} from 'react-router-dom'
 import {Route} from 'react-router-dom';
 
-import firebase from "./firebase.js"
+
 import './App.css';
 
 
