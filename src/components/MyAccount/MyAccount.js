@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import '../../App.css';
-import MyTrips from "./MyTrips.js";
+import MyTrips from "../../utils/MyTrips/MyTrips.js";
 import { Container, Row, Col } from 'reactstrap';
 import NavHeader from '../../navheader';
 
