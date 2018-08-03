@@ -2,14 +2,21 @@ import React, {Component} from 'react';
 import '../../App.css';
 import * as firebase from "firebase";
 
-export default class MyTrips extends Component {
-  constructor() {
-    super();
 
+export default class MyTrips extends Component {
+  constructor(props) {
+    super();
+    this.ownerId = props.ownerId;
   }
 
   componentDidMount() {
-    this.ownerId = this.props.ownerId;
+
+    //storage reference GETTING LINK
+    var storage = firebase.storage();
+    var pathRef = storage.ref('trips/1/main.jpg');
+    pathRef.getDownloadURL().then(function(url) {
+      console.log(url);
+    });
 
     //db querying
     const db = firebase.firestore();
@@ -22,7 +29,7 @@ export default class MyTrips extends Component {
         //HERE WE GETTING ALL TRIPS BY THIS USER
         //DO SOMETHING WITH THEM
         var curr_trip = trip.data();
-        //console.log(curr_trip);
+
       });
     });
   };

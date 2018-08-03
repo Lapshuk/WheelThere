@@ -15,7 +15,6 @@ export default class SavedTrips extends Component {
     //getting all users
     var usersRef = db.collection('trips');
     //getting all trips from the saved_trips list
-    console.log("SAVED TRIPS LIST");
     for (let tripId of this.savedTripsList) {
       var query = usersRef.where('trip_id', '==', tripId);
       query.get().then(snapshot => {
