@@ -15,10 +15,10 @@ export default class NavHeader extends Component{
 
 	render(){
 		return (
-			<div class = "navbar-nav">
+			<div className="navbar-nav">
 				<Navbar color="light" light expand="md">
 					<NavbarBrand href="/" className = "mr-auto">
-						<a href= "/"><img style={{width: '30px', height: '30px'}}src = "https://s3-us-west-2.amazonaws.com/badhorserecords/WheelthereIcon1.png"/></a>
+						<a href= "/"><img style={{width: '30px', height: '30px'}} src = "https://s3-us-west-2.amazonaws.com/badhorserecords/WheelthereIcon1.png"/></a>
 						wheelthere
 					</NavbarBrand>
 				    <Nav navbar>
@@ -28,7 +28,7 @@ export default class NavHeader extends Component{
 			              </NavItem>
 
 			              <NavItem>
-			              	<a href= "/"><img style={{width: '30px', height: '30px'}}src = "http://www.free-icons-download.net/images/plus-icon-27951.png"/></a>
+			              	<a href= "/"><img style={{width: '30px', height: '30px'}} src = "http://www.free-icons-download.net/images/plus-icon-27951.png"/></a>
 			              </NavItem>
 			              <NavItem>
 			                <NavLink href="/components/">Messages</NavLink>

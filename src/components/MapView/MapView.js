@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import MapWrapper from './MapWrapper';
-import NavHeader from '../../navheader';
+import NavHeader from '../../utils/NavHeader/NavHeader';
 import { Container, Row, Col } from 'reactstrap';
 import '../../App.css';
 

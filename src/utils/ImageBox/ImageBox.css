@@ -12,45 +12,75 @@ image-col {
     text-align: left;
 }
 
+/************************************************************************/
+/************************************************* HOMEPAGE INTERACTION */
+/************************************************************************/
+
 #HomePage .image-row {
-    transition: 450ms -webkit-transform;
-    transition: 450ms transform;
     transition: 450ms transform, 450ms -webkit-transform;
-    /*white-space: nowrap;*/
     margin: 35px 0;
-    /*padding-bottom: 10px;*/
 }
+
 #HomePage .image-col {
     position: relative;
     display: inline-block;
-    /*width: 250px;*/
-    /*height: 140.625px;*/
-    /*font-size: 20px;*/
     cursor: pointer;
     transition: 450ms all;
     -webkit-transform-origin: center left;
     transform-origin: center left;
 }
-#HomePage .image-box {
-    /*width: 250px;*/
-    /*height: 140.625px;*/
-    -o-object-fit: cover;
-    object-fit: cover;
+
+#HomePage .image-details {
+    position: absolute;
+    bottom: 24px;
+    left: 15px;
+    right: 15px;
+    top: 0;
+    font-size: 30px;
+    color: white;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+    transition: 450ms opacity;
+    opacity: 0;
 }
 
+#HomePage .image-details:after, .active-image-details:after,
+#HomePage .image-details:before, .active-image-details:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /*display: #000;*/
+}
+
+#HomePage .image-more{
+    position: absolute;
+    bottom: 0;
+    left: 40%;
+    opacity: 0;
+}
+
+
+/* CHANGES WHEN HOVERED */
+#HomePage .image-col:hover .image-details, .active-image-details {
+    opacity: 1;
+}
+
+#HomePage .image-col:hover .image-more, .active-image-more {
+    animation: fadeIn 0.8s ease-in both
+}
 
 #HomePage .image-row:hover .image-col {
     opacity: 0.3;
 }
 
-#HomePage .image-row:hover .image-col:hover {
+#HomePage .image-row:hover .image-col:hover{
     -webkit-transform: scale(1.25);
     transform: scale(1.25);
     opacity: 1;
 }
 
 /* shift left */
-#HomePage .image-row:hover{
+#HomePage .image-row:hover, #HomePage .active-image-row {
     -webkit-transform: translate3d(-8px, 0, 0);
     transform: translate3d(-8px, 0, 0);
 }
@@ -59,6 +89,17 @@ image-col {
 #HomePage .image-col:hover ~ .image-col {
     -webkit-transform: translate3d(65px, 0, 0);
     transform: translate3d(65px, 0, 0);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -10%, 0);
+    }
+    to {
+        opacity: 0.3;
+        transform: translate3d(0, 0, 0);
+    }
 }
 
 

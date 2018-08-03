@@ -17,8 +17,11 @@
     width: 0px;
 }
 
-/*.horizontal-scroll::-webkit-scrollbar-track-piece {*/
-    /*background-color: transparent;*/
-    /*-webkit-border-radius: 6px*/
-/*}*/
+.map-collapse {
+    margin-top: -60px;
+}
+
+.map-collapse-content{
+    height: 200px;
+}
 
