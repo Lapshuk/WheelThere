@@ -37,7 +37,7 @@ export default class MyAccount extends Component {
         //setting state with received data
         this.setState({
           about: data.about,
-          profile_image: data.image,
+          image: data.image,
           email: data.email,
           first_name: data.first_name,
           last_name: data.last_name,

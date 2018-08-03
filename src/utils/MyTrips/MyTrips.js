@@ -12,6 +12,7 @@ export default class MyTrips extends Component {
   componentDidMount() {
 
     //storage reference GETTING LINK
+    //TODO REMOVE NEXT 5 LINES LATER
     var storage = firebase.storage();
     var pathRef = storage.ref('trips/1/main.jpg');
     pathRef.getDownloadURL().then(function(url) {
