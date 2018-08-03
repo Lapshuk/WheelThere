@@ -56,13 +56,7 @@ export default class MyAccount extends Component {
           <NavHeader/>
           <Row>
             <Col>
-              <img src="https://i.ytimg.com/vi/YCaGYUIfdy4/maxresdefault.jpg"
-                   style={{width: '10vw', height: '15vh', borderRadius: '50%'}}/>
-            </Col>
-          </Row>
-          <Row>
-            <Col sm={{size: 'auto', offset: 3}}>
-              <a href="">edit profile</a>
+                {this.state.profile_image}
             </Col>
           </Row>
 
@@ -73,11 +67,21 @@ export default class MyAccount extends Component {
           </Col>
 
           <Row>
-            <MyTrips ownerId={this.userId}/>
+              <Col>
+                  <a href="">edit profile</a>
+              </Col>
           </Row>
 
           <Row>
-            <p>Saved Maps</p>
+            <Col>
+              <MyTrips ownerId={this.userId}/>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col>
+              <h6>Saved Maps</h6>
+            </Col>
           </Row>
           /*Map Objects Here*/
         </div>

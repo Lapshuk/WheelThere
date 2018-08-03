@@ -29,8 +29,8 @@ export default class MyTrips extends Component {
     render() {
         return (
             <div className="App">
-                <p>My Trips</p>
-                /*Map Objects Here*/
+                <h6>My Trips</h6>
+
             </div>
         );
     }
