@@ -21,7 +21,8 @@ export default class Submit extends Component {
                   bathroom: 0,
                   rollability: 0,
                   transport: 0,
-                  tip: ''
+                  tip: '',
+                  image: null
                 };
 
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
@@ -72,13 +73,18 @@ export default class Submit extends Component {
       this.setState({tip: event.target.value});
   }
 
+  handleFileChange(event) {
+      this.setState({image: event.target.files[0]});
+      console.log(event.target.files[0]);
+  }
+
+
   postPin(event) {
-    console.log("Posting");
     const db = firebase.firestore();
     const settings = {timestampsInSnapshots: true};
     db.settings(settings);
-
     var pin_ref = db.collection('pins');
+
     pin_ref.doc().set({
       description: this.state.description,
       address: this.state.address,
@@ -90,6 +96,7 @@ export default class Submit extends Component {
       transport: this.state.transport,
       tip: this.state.tip
     });
+
     event.preventDefault();
   }
 
@@ -136,6 +143,10 @@ export default class Submit extends Component {
 
               <FormGroup>
                 <Input type="textarea" name="tip" id ="tip" placeholder="Any tips?" value={this.state.tip} onChange={this.handleTipChange}/>
+              </FormGroup>
+
+              <FormGroup>
+                <Input type="file" name="picture" id="picture" onChange={this.handleFileChange} />
               </FormGroup>
               <Button type="submit" color="secondary">Submit</Button>
             </Form>
