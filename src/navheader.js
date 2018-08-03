@@ -34,7 +34,7 @@ export default class NavHeader extends Component{
 			                <NavLink href="/components/">Messages</NavLink>
 			              </NavItem>
 			              <NavItem>
-			                <NavLink href="/components/">Accunt</NavLink>
+			                <NavLink href="/components/">Account</NavLink>
 			              </NavItem>
 
 			         </Nav>
