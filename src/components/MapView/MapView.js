@@ -1,15 +1,26 @@
 import React, {Component} from 'react';
 import MapWrapper from './MapWrapper';
+import NavHeader from '../../navheader';
+import { Container, Row, Col } from 'reactstrap';
 import '../../App.css';
 
 export default class MapView extends Component {
 
   render() {
     return (
-        <div className="App">
-          HELLO FROM MAP VIEW
-          {console.log(this.props.match.params.tripId)}
-          <MapWrapper/>
+    	<div>
+    		<NavHeader/>
+			<Row>  
+				<Col>
+				Left panel
+				</Col>  
+				<Col style = {{width:'100vw', height:'50vh'}}>     	
+         	 		<MapWrapper/>
+         	 	</Col>
+          	</Row>
+          	<Row>
+          		<Col> Where is my content?</Col>
+          	</Row>
         </div>
     );
   }
