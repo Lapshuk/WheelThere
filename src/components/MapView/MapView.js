@@ -11,16 +11,21 @@ export default class MapView extends Component {
     	<div>
     		<NavHeader/>
 			<Row>  
-				<Col>
+				<Col xs = "2">
 				Left panel
 				</Col>  
-				<Col style = {{width:'100vw', height:'50vh'}}>     	
+				<Col xs = "10" style = {{width:'100vw', height:'100vh'}}>     	
          	 		<MapWrapper/>
          	 	</Col>
           	</Row>
           	<Row>
-          		<Col> Where is my content?</Col>
           	</Row>
+
+          	<div className = "sticky-right">
+          		<a href= "/"><img style={{width: '70px', height: '70px'}}src = "http://www.free-icons-download.net/images/plus-icon-27951.png"/></a>
+          		<br/>
+          		Testing the bottom right
+          	</div>
         </div>
     );
   }
