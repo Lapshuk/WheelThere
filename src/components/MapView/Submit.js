@@ -11,6 +11,8 @@ export default class Submit extends Component {
 
   constructor(props) {
     super(props);
+
+
     this.state = {description: '',
                   address: '',
                   lat: 0,
@@ -18,26 +20,30 @@ export default class Submit extends Component {
                   fun: 0,
                   bathroom: 0,
                   rollability: 0,
-
-
-
-
+                  transport: 0,
+                  tip: '',
+                  tid: props.tid
                 };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
+    this.postPin = this.postPin.bind(this);
   }
-                // <Input type="Number" name="text" id="fun" placeholder="Fun" />
-                // <Input type="Number" name="text" id="bathroom" placeholder="Bathroom" />
-                // <Input type="Number" name="text" id="rollability" placeholder="Rollability" />
-                // <Input type="Number" name="text" id="transport" placeholder="Transport"/>
 
   postPin(event) {
-    alert('A name was submitted: ' + this.state.value);
+    const db = firebase.firestore();
+    db.collection('pins').doc()
+
+    firebase.database().ref('pins/').set({
+      description: this.state.description,
+      address: this.state.address,
+      lat: this.state.lat,
+      lon: this.state.lon,
+      fun: this.state.fun,
+      bathroom: this.state.bathroom,
+      rollability: this.state.rollability,
+      transport: this.state.transport,
+      tip: this.state.tip
+    });
     event.preventDefault();
   }
 
@@ -53,8 +59,7 @@ export default class Submit extends Component {
         <Row>
           <Col xs = "4"></Col>
           <Col xs = "4">
-            <Form>
-
+            <Form onsubmit={this.postPin}>
               <FormGroup>
                 <Label for="Description">Description</Label>
                 <Input type="textarea" name="text" id="Description" value=this.state.description />
@@ -62,31 +67,30 @@ export default class Submit extends Component {
 
               <FormGroup>
                 <Label for="Address">Address</Label>
-                <Input type="textarea" name="text" id="Address" value=this.state. />
+                <Input type="textarea" name="text" id="Address" value=this.state.address />
               </FormGroup>
 
               <FormGroup>
                 <Label for="Lat">Lat</Label>
-                <Input type="Number" name="text" id="Lat" />
+                <Input type="Number" name="text" id="Lat" value=this.state.lat />
               </FormGroup>
 
               <FormGroup>
                 <Label for="Lon">Lon</Label>
-                <Input type="Number" name="text" id="exampleText" />
+                <Input type="Number" name="text" id="exampleText" value=this.state.lon />
               </FormGroup>
 
               <FormGroup>
                 <Label for="Access">Accessability</Label>
-                <Input type="Number" name="text" id="fun" placeholder="Fun" />
-                <Input type="Number" name="text" id="bathroom" placeholder="Bathroom" />
-                <Input type="Number" name="text" id="rollability" placeholder="Rollability" />
-                <Input type="Number" name="text" id="transport" placeholder="Transport"/>
+                <Input type="Number" name="text" id="fun" placeholder="Fun" value=this.state.fun />
+                <Input type="Number" name="text" id="bathroom" placeholder="Bathroom" value=this.state.bathroom/>
+                <Input type="Number" name="text" id="rollability" placeholder="Rollability" value=this.state.rollability/>
+                <Input type="Number" name="text" id="transport" placeholder="Transport" value=this.state.transport/>
               </FormGroup>
 
               <FormGroup>
-                <Input type="textarea" name="tip" id ="tip" placeholder="Any tips?"/>
+                <Input type="textarea" name="tip" id ="tip" placeholder="Any tips?" value=this.state.tip/>
               </FormGroup>
-
 
             </Form>
           </Col>
