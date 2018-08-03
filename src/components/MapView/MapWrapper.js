@@ -12,6 +12,10 @@ export class MapWrapper extends Component {
       }
     }
   }
+
+
+
+
   componentDidMount() {
     console.log("called");
     this.loadMap();
@@ -20,6 +24,7 @@ export class MapWrapper extends Component {
   loadMap() {
     if (this.props && this.props.google) {
       // google is available
+
       const {google} = this.props;
       const maps = google.maps;
       const mapRef = this.refs.map;
@@ -33,6 +38,7 @@ export class MapWrapper extends Component {
       height: '100%',
       position: 'relative'
     }
+
     return (
       <Map
           google={this.props.google}
@@ -52,7 +58,7 @@ export class MapWrapper extends Component {
     );
   }
 }
- 
+
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyD3bt6opXtgKxFUYVtlkjymkQTjxXZRWic'
 })(MapWrapper)
