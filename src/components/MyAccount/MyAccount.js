@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import '../../App.css';
-import MyMaps from "./MyMaps.js";
+import MyTrips from "./MyTrips.js";
 import { Container, Row, Col } from 'reactstrap';
 import NavHeader from '../../navheader';
 
@@ -11,10 +11,12 @@ export default class MyAccount extends Component {
             <div className="App">
                 <NavHeader/>
                 <Row>
-                    <Col>
+                    <Col sm={{ size: 'auto', offset: 5 }}>
                         <img src="https://i.ytimg.com/vi/YCaGYUIfdy4/maxresdefault.jpg" style = {{width:'10vw', height:'15vh', borderRadius: '50%'}}/>
                     </Col>
+                    <Col sm={{ size: 'auto', offset: 3 }}>
                         <a href="">edit profile</a>
+                    </Col>
                 </Row>
 
                 <Col>
@@ -24,7 +26,7 @@ export default class MyAccount extends Component {
                 </Col>
 
                 <Row>
-                    <MyMaps />
+                    <MyTrips />
                 </Row>
 
                 <Row>
