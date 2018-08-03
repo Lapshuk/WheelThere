@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 import '../../App.css';
 import * as firebase from 'firebase'
 import MyTrips from "../../utils/MyTrips/MyTrips.js";
+import SavedTrips from "../../utils/SavedTrips/SavedTrips.js";
 import {Container, Row, Col} from 'reactstrap';
-import NavHeader from '../../navheader';
+import NavHeader from '../../utils/NavHeader/NavHeader';
 
 export default class MyAccount extends Component {
 
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       set: false,
@@ -17,19 +18,19 @@ export default class MyAccount extends Component {
       last_name: "",
       my_trips: "",
       saved_trips: "",
-      password: ""
+      password: "",
     };
+    this.userId = props.match.params.userId;
+
   };
 
   componentDidMount() {
-    //getting userID from the link
-    var userId = this.props.match.params.userId;
     //db querying
     const db = firebase.firestore();
     //getting all users
     var usersRef = db.collection('users');
     //filtering users by ID
-    var query = usersRef.where('user_id', '==', userId);
+    var query = usersRef.where('user_id', '==', this.props.match.params.userId);
     query.get().then(snapshot => {
       snapshot.forEach(user => {
         var data = user.data();
@@ -45,10 +46,15 @@ export default class MyAccount extends Component {
           password: data.password,
           set: true
         });
-        console.log();
       });
     });
-  }
+  };
+
+  loadSavedTrips = () => {
+    if(this.state.set == true){
+      return (<SavedTrips tripIds={this.state.saved_trips}/>);
+    }
+  };
 
   render() {
     return (
@@ -73,11 +79,11 @@ export default class MyAccount extends Component {
           </Col>
 
           <Row>
-            <MyTrips/>
+            <MyTrips ownerId={this.userId}/>
           </Row>
 
           <Row>
-            <p>Saved Maps</p>
+            {this.loadSavedTrips()}
           </Row>
           /*Map Objects Here*/
         </div>
