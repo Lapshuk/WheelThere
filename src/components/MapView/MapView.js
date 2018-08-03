@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import DragIcon from './DragIcon'
 import MapWrapper from './MapWrapper';
 import NavHeader from '../../navheader';
 import { Container, Row, Col } from 'reactstrap';
@@ -12,13 +13,16 @@ export default class MapView extends Component {
     		<NavHeader/>
 			<Row>  
 				<Col xs = "2">
-				Left panel
+					<div className = "maps-container">
+						Left panel
+					</div>
+					<div className = "drag-container">
+          				<DragIcon/>
+					</div>
 				</Col>  
 				<Col xs = "10" style = {{width:'100vw', height:'100vh'}}>     	
          	 		<MapWrapper/>
          	 	</Col>
-          	</Row>
-          	<Row>
           	</Row>
 
           	<div className = "sticky-right">
