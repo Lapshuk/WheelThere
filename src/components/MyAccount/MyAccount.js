@@ -19,17 +19,18 @@ export default class MyAccount extends Component {
       saved_trips: "",
       password: ""
     };
+
   };
 
   componentDidMount() {
-    //getting userID from the link
-    var userId = this.props.match.params.userId;
+
+    this.userId = this.props.match.params.userId;
     //db querying
     const db = firebase.firestore();
     //getting all users
     var usersRef = db.collection('users');
     //filtering users by ID
-    var query = usersRef.where('user_id', '==', userId);
+    var query = usersRef.where('user_id', '==', this.userId);
     query.get().then(snapshot => {
       snapshot.forEach(user => {
         var data = user.data();
@@ -45,10 +46,9 @@ export default class MyAccount extends Component {
           password: data.password,
           set: true
         });
-        console.log();
       });
     });
-  }
+  };
 
   render() {
     return (
@@ -73,7 +73,7 @@ export default class MyAccount extends Component {
           </Col>
 
           <Row>
-            <MyTrips/>
+            <MyTrips ownerId={this.userId}/>
           </Row>
 
           <Row>
