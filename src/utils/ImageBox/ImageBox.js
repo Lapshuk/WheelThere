@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Container, Col, Row } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import '../../App.css';
 import './ImageBox.css';
 
@@ -13,27 +13,26 @@ export default class ImageBox extends Component {
     };
 
     this.trips = this.props.trips;
+    this.overflow = this.props.overflow;
   }
 
 
   render() {
 
     const tripList = Object.keys(this.trips).map(key =>
-      <Col xs="3" className='image-col' key={key}>
+      <Col sm='3' className='image-col' key={key}>
         <div className='image-container'>
           <img className='image-box' src={this.trips[key].image} alt=''/>
         </div>
-        <div>{this.trips[key].name}</div>
+        <div className='image-title'>{this.trips[key].name}</div>
       </Col>
     )
 
     return (
-      <div className="App">
-        <Container>
-          <Row>
-          {tripList}
-          </Row>
-        </Container>
+      <div id="ImageBox">
+        <Row className='image-row'>
+        {tripList}
+        </Row>
       </div>
     );
   }

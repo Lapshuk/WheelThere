@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
+import { Container } from 'reactstrap';
 import '../../App.css';
 import ImageBox from "../../utils/ImageBox/ImageBox";
+import './HomePage.css';
+
 
 export default class HomePage extends Component {
 
@@ -8,22 +11,27 @@ export default class HomePage extends Component {
 
     const trips =  {
       1: {
-        'image' : 'sample-img.jpg',
+        'image' : 'https://i.imgur.com/fszDZJi.jpg',
         'name' : 'Machu Pichu',
         'pins' : []
       },
       2: {
-        'image' : 'sample-img.jpg',
+        'image' : 'https://i.imgur.com/fszDZJi.jpg',
         'name' : 'The Great Whistler',
         'pins' : []
       },
       3: {
-        'image' : 'sample-img.jpg',
+        'image' : 'https://i.imgur.com/fszDZJi.jpg',
         'name' : 'Gimme Italy',
         'pins' : []
       },
       4: {
-        'image' : 'sample-img.jpg',
+        'image' : 'https://i.imgur.com/fszDZJi.jpg',
+        'name' : 'YellowStone',
+        'pins' : []
+      },
+      5: {
+        'image' : 'https://i.imgur.com/fszDZJi.jpg',
         'name' : 'YellowStone',
         'pins' : []
       },
@@ -31,9 +39,25 @@ export default class HomePage extends Component {
 
     return (
 
-        <div className="App">
+      <Container fluid='true' id='HomePage'>
+        <div> NAV BAR BRIAN GIMME </div>
+
+        <div className='category-title'> most popular </div>
+        <div className='category horizontal-scroll'>
+          <ImageBox trips={trips}/>
+        </div>
+
+        <div className='category-title'> local - San Francisco </div>
+        <div className='category horizontal-scroll'>
+          <ImageBox trips={trips}/>
+        </div>
+
+        <div className='category-title'> Some Other Category </div>
+        <div className='category horizontal-scroll'>
           <ImageBox trips={trips} />
         </div>
+
+      </Container>
     );
   }
 }
