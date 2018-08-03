@@ -3,7 +3,7 @@ import '../../App.css';
 import * as firebase from "firebase";
 
 export default class MyTrips extends Component {
-  constructor(){
+  constructor() {
     super();
 
   }
@@ -15,14 +15,14 @@ export default class MyTrips extends Component {
     const db = firebase.firestore();
     //getting all users
     var usersRef = db.collection('trips');
-    //filtering users by ID
-    var query = usersRef.where('owner_id', '==', 1);
+    //filtering trips that have provided owner
+    var query = usersRef.where('owner_id', '==', this.ownerId);
     query.get().then(snapshot => {
       snapshot.forEach(trip => {
         //HERE WE GETTING ALL TRIPS BY THIS USER
         //DO SOMETHING WITH THEM
         var curr_trip = trip.data();
-        console.log(curr_trip);
+        //console.log(curr_trip);
       });
     });
   };
