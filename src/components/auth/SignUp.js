@@ -21,7 +21,7 @@ const byPropKey = (propertyName, value) => () => ({
     [propertyName]: value,
 });
 
-class SignUpForm extends Component {
+export default class SignUpForm extends Component {
     constructor(props) {
         super(props);
 
@@ -97,18 +97,15 @@ class SignUpForm extends Component {
     }
 }
 
-const SignUpLink = () =>
-    <p>
-        Don't have an account?
-        {' '}
-        <Link to={routes.SIGN_UP}>Sign Up</Link>
-    </p>;
+// const SignUpLink = () =>
+//     <p>
+//         Dont have an account?
+//         {' '}
+//         // <Link to={routes.SIGN_UP}>Sign Up</Link>
+//     </p>;
 
-export default SignUpPage;
-
-export {
-    SignUpForm,
-    SignUpLink,
-};
-    }
-}
+// export default SignUpPage;
+//
+// export {
+//     SignUpForm,
+// };
