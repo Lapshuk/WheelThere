@@ -37,6 +37,7 @@ export default class Submit extends Component {
     this.handleRollabilityChange = this.handleRollabilityChange.bind(this);
     this.handleTransportChange = this.handleTransportChange.bind(this);
     this.handleTipChange = this.handleTipChange.bind(this);
+    this.handleFileChange = this.handleFileChange.bind(this);
     this.postPin = this.postPin.bind(this);
     this.handleFileChange = this.handleFileChange.bind(this);
     this.getPublicUrl = this.getPublicUrl.bind(this);
@@ -82,6 +83,7 @@ export default class Submit extends Component {
   handleFileChange(event) {
     this.setState({image: event.target.files[0]});
     console.log(event.target.files[0]);
+
   }
 
   getPublicUrl(imgPath) {
