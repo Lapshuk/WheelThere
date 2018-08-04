@@ -32,8 +32,12 @@ class App extends Component {
             <Route path="/mapview/:tripId" component={MapView}/>
             <Route path="/myaccount/:userId" component={MyAccount}/>
             <Route path="/tripdetails/:tripId" component={TripDetails}/>
+<<<<<<< HEAD
             <Route path="/login/" component={LoginForm} />
             <Route path="/SignUp/" component={SignUpForm} />
+=======
+            <Route path="/submitPin/:tripId" component={Submit}/>
+>>>>>>> ab3e8c4ae4a227d5bb6c94904d2b6d2ffbb0e6ad
           </div>
         </BrowserRouter>
     );
