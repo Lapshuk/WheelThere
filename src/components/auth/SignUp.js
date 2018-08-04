@@ -35,6 +35,7 @@ export default class SignUpForm extends Component {
           // Handle Errors here.
           var errorCode = error.code;
           var errorMessage = error.message;
+          
           this.setState({error: true});
           this.setState({errorMessage: errorMessage});
         }.bind(this));

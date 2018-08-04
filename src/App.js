@@ -11,8 +11,12 @@ import LoginForm from "./components/auth/Login.js"
 import SignOutButton from "./components/auth/SignOut.js"
 import SignUpForm from "./components/auth/SignUp.js"
 
+import withAuthentication from './components/auth/WithAuthentication.js';
+
 import {BrowserRouter} from 'react-router-dom'
 import {Route} from 'react-router-dom';
+
+import * as firebase from "firebase";
 
 
 import './App.css';
@@ -31,7 +35,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      authUser: null,
+      text: ''
     };
   }
 
@@ -53,4 +57,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withAuthentication(App);

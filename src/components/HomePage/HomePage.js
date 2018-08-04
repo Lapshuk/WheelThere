@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import { Container, Row, Collapse } from 'reactstrap';
 import '../../App.css';
+
+import AuthUserContext from '../auth/AuthUserContext';
+
 import ImageBox from "../../utils/ImageBox/ImageBox";
 import NavHeader from '../../utils/NavHeader/NavHeader';
 import './HomePage.css';
@@ -16,6 +19,8 @@ export default class HomePage extends Component {
       collapse: false,
       targetId: null
     };
+
+
   }
 
   toggle(e) {
@@ -67,8 +72,13 @@ export default class HomePage extends Component {
 
     return (
       <div id='HomePage'>
-        <NavHeader/>
-
+      <NavHeader/>
+      <AuthUserContext.Consumer>
+        {authUser => authUser
+          ? <p> {authUser.email} </p> 
+          : null
+        }
+      </AuthUserContext.Consumer>
         <Container fluid={true}>
           <div className='category-title'> most popular </div>
           <div className='category horizontal-scroll' onClick={ (e) => this.toggle(e)} style={{ marginBottom: '1rem' }}>
