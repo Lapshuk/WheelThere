@@ -5,7 +5,7 @@ import MapView from "./components/MapView/MapView.js"
 import MyAccount from "./components/MyAccount/MyAccount.js"
 import TripDetails from "./components/TripDetails/TripDetails.js"
 import LoginForm from "./components/auth/Login.js"
-import SignOutForm from "./components/auth/SignOut.js"
+import SignOutButton from "./components/auth/SignOut.js"
 import SignUpForm from "./components/auth/SignUp.js"
 
 import {BrowserRouter} from 'react-router-dom'
@@ -33,7 +33,7 @@ class App extends Component {
             <Route path="/myaccount/:userId" component={MyAccount}/>
             <Route path="/tripdetails/:tripId" component={TripDetails}/>
             <Route path="/login/" component={LoginForm} />
-            <Route path="/SignUp/" component={SignUpForm} />
+            <Route path="/signup/" component={SignUpForm} />
           </div>
         </BrowserRouter>
     );

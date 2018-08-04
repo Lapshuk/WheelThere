@@ -3,12 +3,6 @@ import { Container, Row, Collapse } from 'reactstrap';
 import '../../App.css';
 import * as firebase from "firebase";
 
-const SignUpPage = () =>
-    <div>
-        <h1>SignUp</h1>
-        <SignUpForm />
-    </div>;
-
 const INITIAL_STATE = {
     username: '',
     email: '',
@@ -62,50 +56,40 @@ export default class SignUpForm extends Component {
             username === '';
 
         return (
-            <form onSubmit={this.onSubmit}>
-                <input
-                    value={username}
-                    onChange={event => this.setState(byPropKey('username', event.target.value))}
-                    type="text"
-                    placeholder="Full Name"
-                />
-                <input
-                    value={email}
-                    onChange={event => this.setState(byPropKey('email', event.target.value))}
-                    type="text"
-                    placeholder="Email Address"
-                />
-                <input
-                    value={passwordOne}
-                    onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
-                    type="password"
-                    placeholder="Password"
-                />
-                <input
-                    value={passwordTwo}
-                    onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
-                    type="password"
-                    placeholder="Confirm Password"
-                />
-                <button disabled={isInvalid} type="submit">
-                    Sign Up
-                </button>
+            <div>
+                <h1>Sign Up</h1>
+                <form onSubmit={this.onSubmit}>
+                    <input
+                        value={username}
+                        onChange={event => this.setState(byPropKey('username', event.target.value))}
+                        type="text"
+                        placeholder="Full Name"
+                    />
+                    <input
+                        value={email}
+                        onChange={event => this.setState(byPropKey('email', event.target.value))}
+                        type="text"
+                        placeholder="Email Address"
+                    />
+                    <input
+                        value={passwordOne}
+                        onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
+                        type="password"
+                        placeholder="Password"
+                    />
+                    <input
+                        value={passwordTwo}
+                        onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
+                        type="password"
+                        placeholder="Confirm Password"
+                    />
+                    <button disabled={isInvalid} type="submit">
+                        Sign Up
+                    </button>
 
-                { error && <p>{error.message}</p> }
-            </form>
+                    { error && <p>{error.message}</p> }
+                </form>
+            </div>
         );
     }
 }
-
-// const SignUpLink = () =>
-//     <p>
-//         Dont have an account?
-//         {' '}
-//         // <Link to={routes.SIGN_UP}>Sign Up</Link>
-//     </p>;
-
-// export default SignUpPage;
-//
-// export {
-//     SignUpForm,
-// };
