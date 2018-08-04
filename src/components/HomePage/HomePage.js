@@ -25,8 +25,6 @@ export default class HomePage extends Component {
   }
 
 
-
-
   toggle(e) {
     let target =  e.target.parentElement.parentElement.attributes["data-id"].value;
     this.setState({ collapse: !this.state.collapse, targetId: target });
@@ -38,19 +36,19 @@ export default class HomePage extends Component {
     let popQuery = db.collection('trips').where('stars', '==', 5);
     let restQuery = db.collection('trips').where('stars', '<', 5);
 
-    let tempPopTrips = [];
-    let tempRestTrips = [];
+    let tempPopTrips = {};
+    let tempRestTrips = {};
 
     let popPromise = popQuery.get();
     let restPromise = restQuery.get();
 
     Promise.all([popPromise, restPromise]).then( (values) => {
       values[0].forEach( (doc) => {
-        tempPopTrips.push(doc.data());
+        tempPopTrips[doc.data().trip_id] = doc.data();
       })
 
       values[1].forEach( (doc) => {
-        tempRestTrips.push(doc.data());
+        tempRestTrips[doc.data().trip_id] = doc.data();
       })
 
       this.setState({loaded: true, popularTrips: tempPopTrips, restTrips: tempRestTrips});
@@ -82,27 +80,33 @@ export default class HomePage extends Component {
     if(!this.state.loaded) {
       container = <Container><img src={require('../../imgs/loader.svg')} alt=''/></Container>
     } else {
+
+      let collapsePop = !this.state.popularTrips[this.state.targetId] ? "" :
+                      <Collapse className='map-collapse' isOpen={this.state.collapse}>
+                        <Row className='map-collapse-content shadow'>
+                          <div>{this.state.targetId ? this.getTrips(this.category.popular)[this.state.targetId].name : ""}</div>
+                        </Row>
+                      </Collapse>;
+      let collapseRes = !this.state.restTrips[this.state.targetId] ? "" :
+                    <Collapse className='map-collapse' isOpen={this.state.collapse}>
+                      <Row className='map-collapse-content shadow'>
+                        <div>{this.state.targetId ? this.getTrips(this.category.rest)[this.state.targetId].name : ""}</div>
+                      </Row>
+                    </Collapse>;
+
       container = <Container fluid={true}>
                     <div className='category-title'> most popular </div>
                     <div className='category horizontal-scroll' onClick={ (e) => this.toggle(e)} style={{ marginBottom: '1rem' }}>
                       <ImageBox trips={this.getTrips(this.category.popular)}/>
                     </div>
-                    <Collapse className='map-collapse' isOpen={this.state.collapse}>
-                      <Row className='map-collapse-content shadow'>
-                        <div>{this.state.targetId ? this.getTrips(this.category.popular)[this.state.targetId].name : ""}</div>
-                      </Row>
-                    </Collapse>
-
+                    {collapsePop}
                     <div className='category-title'> local - San Francisco </div>
                     <div className='category horizontal-scroll' onClick={ (e) => this.toggle(e)} style={{ marginBottom: '1rem' }}>
                       <ImageBox trips={this.getTrips(this.category.rest)}/>
                     </div>
-                    <Collapse className='map-collapse' isOpen={this.state.collapse}>
-                      <Row className='map-collapse-content shadow'>
-                        <div>{this.state.targetId ? this.getTrips(this.category.rest)[this.state.targetId].name : ""}</div>
-                      </Row>
-                    </Collapse>
+                    {collapseRes}
                   </Container>
+
     }
 
     return (

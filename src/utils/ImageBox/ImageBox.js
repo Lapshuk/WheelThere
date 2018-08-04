@@ -31,7 +31,7 @@ export default class ImageBox extends Component {
     let activeImgDetails = this.state.active ? "image-details active-image-details" : "image-details";
 
     const tripList = Object.keys(this.trips).map(key =>
-      <Col sm='3' className={activeImgCol} key={key} data-id={key} onClick={ (e) => this.setActive(e) }>
+      <Col sm='3' className={activeImgCol} key={key} data-id={this.trips[key].trip_id} onClick={ (e) => this.setActive(e) }>
         <div className='image-container'>
           <img className='image-box' src={this.trips[key].image} alt=''/>
           <div className={activeImgDetails}>
