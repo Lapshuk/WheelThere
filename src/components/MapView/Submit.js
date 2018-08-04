@@ -86,11 +86,24 @@ export default class Submit extends Component {
 
   }
 
-  getPublicUrl(imgPath) {
+  getPublicUrl(imgPath, pin_ref) {
     var storageRef = firebase.storage().ref();
-    var a = this;
+    //this should be bound
+    var self_ref = this;
     storageRef.child(imgPath).getDownloadURL().then(function (url) {
-      a.setState({img_url: url});
+      self_ref.setState({img_url: url});
+      pin_ref.doc().set({
+        description: self_ref.state.description,
+        address: self_ref.state.address,
+        lat: self_ref.state.lat,
+        lon: self_ref.state.lon,
+        fun: self_ref.state.fun,
+        bathroom: self_ref.state.bathroom,
+        rollability: self_ref.state.rollability,
+        transport: self_ref.state.transport,
+        tip: self_ref.state.tip,
+        image: self_ref.state.img_url
+      });
     });
   };
 
@@ -106,33 +119,14 @@ export default class Submit extends Component {
     var storageRef = firebase.storage().ref();
     var imgRefPath = 'trips/' + this.tripID + "/pins/" + "1" + ".jpg";
     var dbImageRef = storageRef.child(imgRefPath);
-
-    var a = this;
-    dbImageRef.put(this.state.image)
-        .then(function (snapshot) {
-          if (snapshot.state == "success") {
-            a.getPublicUrl(imgRefPath);
-          }
-          console.log('image put in database!')
-        }.then(function() {
-              console.log('UPDATED IMAGE');
-              pin_ref.doc().set({
-                description: a.state.description,
-                address: a.state.address,
-                lat: a.state.lat,
-                lon: a.state.lon,
-                fun: a.state.fun,
-                bathroom: a.state.bathroom,
-                rollability: a.state.rollability,
-                transport: a.state.transport,
-                tip: a.state.tip,
-                image: a.state.img_url
-              })
-            })
-            );
-
-
     event.preventDefault();
+
+    var self_= this;
+    dbImageRef.put(this.state.image).then(function (snapshot) {
+          if (snapshot.state == "success") {
+            self_.getPublicUrl(imgRefPath, pin_ref);
+          }
+        });
   }
 
 
