@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {ReactDOM} from 'react';
+import AddPin from '../../utils/AddPin/AddPin'
 import $ from 'jquery';
 
 //asynchronous loading magic
@@ -17,8 +18,23 @@ var EIFFEL_TOWER_POSITION = {
 
 var map; //global name space, because react is stupid as f
 
-function createMarker(latLng){
+
+export default class MapWrapper extends Component {
+    constructor(){
+      super();
+      this.togglePinModal = this.togglePinModal.bind(this);
+      this.state={
+        modal: false
+      }
+    }
+    togglePinModal(){
+      this.setState({
+        modal: true
+      });
+    }
+    createMarker(latLng){
         //used in the reres function;
+
       var marker = new window.google.maps.Marker({
           position: latLng,
           map: map
@@ -26,10 +42,7 @@ function createMarker(latLng){
       marker.addListener('click', function(evt){
         alert('hahahahahahaha');
       });
-}
-
-export default class MapWrapper extends Component {
-
+    }
     componentDidMount() {
           // Connect the initMap() function within this class to the global window context,
           // so Google Maps can invoke it
@@ -48,7 +61,7 @@ export default class MapWrapper extends Component {
           });
           var bin = document.querySelector('#mapwrapper');
           var offset = document.getElementById("left-column").offsetWidth;
-
+          var self_reference = this;
           function point2LatLng(point, map) {
             if(!map){
               return null;
@@ -71,16 +84,17 @@ export default class MapWrapper extends Component {
             var p = new window.google.maps.Point(e.x, e.y);
             var latlng = point2LatLng(p, map);
             e.dataTransfer.dropEffect = 'copy';
-            createMarker(latlng);
+            self_reference.createMarker(latlng); //jesus christ this is ugly
+            self_reference.togglePinModal();
             return false;
           });
 
       }
-
-
       render() {
           return (
-              <div ref="map" style={{height: '100%', width: '100%'}}> </div>
+              <div ref="map" style={{height: '100%', width: '100%'}}>
+                  <AddPin modal={this.state.modal} ref = "addPin"/>
+               </div>
 
           );
     
