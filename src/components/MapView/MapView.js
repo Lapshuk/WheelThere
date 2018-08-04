@@ -10,15 +10,22 @@ export default class MapView extends Component {
     return (
     	<div>
     		<NavHeader/>
-			<Row>
-				<Col xs = "2">
-				Left panel
-				</Col>
-				<Col xs = "10" style = {{width:'100vw', height:'100vh'}}>
+			<Row>  
+				<Col id = 'left-column' xs = "2">
+					<div className = "maps-container">
+						Left panel
+					</div>
+					<div className = "drag-container">
+		     	 	    <div className = "box-border">
+				          <img style = {{width: '30px', height: '50px'}} src = "https://i.pinimg.com/originals/f2/57/78/f25778f30e29a96c44c4f72ef645aa63.png"/>
+				          <p>Drag to add to the map.</p>
+				        </div>
+					</div>
+				</Col>  
+				<Col id = "mapwrapper" xs = "10" style = {{width:'100vw', height:'100vh'}}>     	
          	 		<MapWrapper/>
          	 	</Col>
-          	</Row>
-          	<Row>
+
           	</Row>
 
           	<div className = "sticky-right">

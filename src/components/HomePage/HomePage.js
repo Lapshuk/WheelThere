@@ -4,6 +4,7 @@ import '../../App.css';
 import ImageBox from "../../utils/ImageBox/ImageBox";
 import NavHeader from '../../utils/NavHeader/NavHeader';
 import './HomePage.css';
+import * as firebase from "firebase";
 
 
 export default class HomePage extends Component {
@@ -20,6 +21,18 @@ export default class HomePage extends Component {
   toggle(e) {
     let target =  e.target.parentElement.parentElement.attributes["data-id"].value;
     this.setState({ collapse: !this.state.collapse, targetId: target });
+  }
+
+  componentDidMount() {
+    //db querying
+    const db = firebase.firestore();
+    //getting all users
+    var tripsRef = db.collection('trips');
+    tripsRef.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        console.log(doc.data());
+      });
+    });
   }
 
   render() {
