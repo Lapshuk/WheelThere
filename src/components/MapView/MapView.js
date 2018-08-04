@@ -3,14 +3,20 @@ import MapWrapper from './MapWrapper';
 import NavHeader from '../../utils/NavHeader/NavHeader';
 import { Container, Row, Col } from 'reactstrap';
 import '../../App.css';
+import * as firebase from "firebase";
+
 
 export default class MapView extends Component {
+  constructor(props) {
+    super(props);
+    console.log(firebase.auth().currentUser);
+  }
 
   render() {
     return (
     	<div>
     		<NavHeader/>
-			<Row>  
+			<Row>
 				<Col id = 'left-column' xs = "2">
 					<div className = "maps-container">
 						Left panel
@@ -21,8 +27,8 @@ export default class MapView extends Component {
 				          <p>Drag to add to the map.</p>
 				        </div>
 					</div>
-				</Col>  
-				<Col id = "mapwrapper" xs = "10" style = {{width:'100vw', height:'100vh'}}>     	
+				</Col>
+				<Col id = "mapwrapper" xs = "10" style = {{width:'100vw', height:'100vh'}}>
          	 		<MapWrapper/>
          	 	</Col>
 

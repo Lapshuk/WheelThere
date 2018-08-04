@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 
 import HomePage from "./components/HomePage/HomePage.js"
+
 import MapView from "./components/MapView/MapView.js"
+import Submit from "./components/MapView/Submit.js"
+
 import MyAccount from "./components/MyAccount/MyAccount.js"
 import TripDetails from "./components/TripDetails/TripDetails.js"
 import LoginForm from "./components/auth/Login.js"
@@ -24,6 +27,15 @@ const Home = () => (
 );
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      authUser: null,
+    };
+  }
+
+
   render() {
     return (
         <BrowserRouter>
@@ -32,16 +44,9 @@ class App extends Component {
             <Route path="/mapview/:tripId" component={MapView}/>
             <Route path="/myaccount/:userId" component={MyAccount}/>
             <Route path="/tripdetails/:tripId" component={TripDetails}/>
-<<<<<<< HEAD
             <Route path="/login/" component={LoginForm} />
-<<<<<<< HEAD
-            <Route path="/SignUp/" component={SignUpForm} />
-=======
-            <Route path="/submitPin/:tripId" component={Submit}/>
->>>>>>> ab3e8c4ae4a227d5bb6c94904d2b6d2ffbb0e6ad
-=======
             <Route path="/signup/" component={SignUpForm} />
->>>>>>> 926ba450f0ac874819b0ef3c54b0fe0d77e257c0
+            <Route path="/submitpin/:tripId" component={Submit}/>
           </div>
         </BrowserRouter>
     );
