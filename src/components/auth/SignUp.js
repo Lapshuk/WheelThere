@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import { Container, Row, Collapse } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import '../../App.css';
 import * as firebase from "firebase";
+import NavHeader from '../../utils/NavHeader/NavHeader';
+import './Login.css'
 
 const INITIAL_STATE = {
     username: '',
@@ -57,38 +59,50 @@ export default class SignUpForm extends Component {
 
         return (
             <div>
-                <h1>Sign Up</h1>
-                <form onSubmit={this.onSubmit}>
-                    <input
-                        value={username}
-                        onChange={event => this.setState(byPropKey('username', event.target.value))}
-                        type="text"
-                        placeholder="Full Name"
-                    />
-                    <input
-                        value={email}
-                        onChange={event => this.setState(byPropKey('email', event.target.value))}
-                        type="text"
-                        placeholder="Email Address"
-                    />
-                    <input
-                        value={passwordOne}
-                        onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
-                        type="password"
-                        placeholder="Password"
-                    />
-                    <input
-                        value={passwordTwo}
-                        onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
-                        type="password"
-                        placeholder="Confirm Password"
-                    />
-                    <button disabled={isInvalid} type="submit">
-                        Sign Up
-                    </button>
+                <NavHeader />
+                <Row>
+                    <Col>
+                        <h1>Sign Up</h1>
+                    </Col>
+                </Row>
 
-                    { error && <p>{error.message}</p> }
-                </form>
+                    <form onSubmit={this.onSubmit}>
+                        <input
+                            className="fields"
+                            value={username}
+                            onChange={event => this.setState(byPropKey('username', event.target.value))}
+                            type="text"
+                            placeholder="Full Name"
+                        />
+                        <input
+                            className="fields"
+                            value={email}
+                            onChange={event => this.setState(byPropKey('email', event.target.value))}
+                            type="text"
+                            placeholder="Email Address"
+                        />
+                        <input
+                            className="fields"
+                            value={passwordOne}
+                            onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
+                            type="password"
+                            placeholder="Password"
+                        />
+                        <input
+                            className="fields"
+                            value={passwordTwo}
+                            onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
+                            type="password"
+                            placeholder="Confirm Password"
+                        />
+                        <button
+                            className="fields"
+                            disabled={isInvalid} type="submit">
+                            Sign Up
+                        </button>
+
+                        { error && <p>{error.message}</p> }
+                    </form>
             </div>
         );
     }

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import '../../App.css';
 import * as firebase from "firebase";
-// import { SignUpLink } from './SignUp';
-import '../../App.css';
 import {Container, Row, Col} from 'reactstrap';
+import NavHeader from '../../utils/NavHeader/NavHeader';
+import './Login.css'
 
 
 const byPropKey = (propertyName, value) => () => ({
@@ -52,27 +52,47 @@ export default class LoginForm extends Component {
             email === '';
 
         return (
+
             <div>
-                <h1>Log In</h1>
+                <NavHeader />
+                <Row>
+                    <Col>
+                        <h1>Log In</h1>
+                    </Col>
+                </Row>
+
                 <form onSubmit={this.onSubmit}>
-                    <input
-                        value={email}
-                        onChange={event => this.setState(byPropKey('email', event.target.value))}
-                        type="text"
-                        placeholder="Email Address"
-                    />
-                    <input
-                        value={password}
-                        onChange={event => this.setState(byPropKey('password', event.target.value))}
-                        type="password"
-                        placeholder="Password"
-                    />
-                    <button disabled={isInvalid} type="submit">
-                        Sign In
-                    </button>
+                        <input
+                            className="fields"
+                            value={email}
+                            onChange={event => this.setState(byPropKey('email', event.target.value))}
+                            type="text"
+                            placeholder="Email Address"
+                        />
+                        <input
+                            className="fields"
+                            value={password}
+                            onChange={event => this.setState(byPropKey('password', event.target.value))}
+                            type="password"
+                            placeholder="Password"
+                        />
+                        <button
+                            className="fields"
+                            disabled={isInvalid} type="submit">
+                            Sign In
+                        </button>
 
                     { error && <p>{error.message}</p> }
                 </form>
+
+                <Row>
+                    <Col>
+                        <p>
+                            Don't have an account? <a href=''>Sign Up</a>
+                        </p>
+                    </Col>
+                </Row>
+
             </div>
         );
     }
