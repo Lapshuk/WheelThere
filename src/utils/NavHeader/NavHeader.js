@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import AddMap from '../AddMap/AddMap'
 import {
   Navbar,
   NavbarBrand,
@@ -10,33 +11,44 @@ import {
 import { Input } from 'reactstrap';
 import { FaBeer, FaAccessibleIcon, FaGooglePlusSquare} from 'react-icons/fa';
 
+import $ from 'jquery';
+
 export default class NavHeader extends Component{
-
-
+	constructor(){
+		super();
+		this.toggleMapModal = this.toggleMapModal.bind(this);
+		this.state={
+			modal: false
+		}
+	}
+	toggleMapModal(e){
+		e.preventDefault();
+		this.setState({
+			modal: true
+		});
+	}
 	render(){
 		return (
 			<div>
 				<Navbar className = "drop-shadow" color="light" light expand="md">
 					<NavbarBrand href="/" className = "mr-auto">
-						<a href= "/"><img style={{width: '30px', height: '30px'}}src = "https://s3-us-west-2.amazonaws.com/badhorserecords/WheelthereIcon2.png"/></a>
+						<img style={{width: '30px', height: '30px'}}src = "https://s3-us-west-2.amazonaws.com/badhorserecords/WheelthereIcon2.png"/>
 						wheelthere
 					</NavbarBrand>
 				    <Nav navbar>
-
 			          	  <NavItem>
 		         			 <Input className="searchBar" type="search" name="searc" id="searchBar" placeholder="search" />
 			              </NavItem>
-
 			              <NavItem>
-			              	<a href= "/"><img style={{width: '30px', height: '30px'}}src = "http://www.free-icons-download.net/images/plus-icon-27951.png"/></a>
+			                <NavLink onClick = {this.toggleMapModal} >Add map</NavLink>
 			              </NavItem>
 			              <NavItem>
-			                <NavLink href="/components/">Messages</NavLink>
+			                <NavLink >Messages</NavLink>
 			              </NavItem>
 			              <NavItem>
-			                <NavLink href="/components/">Account</NavLink>
+			                <NavLink >Account</NavLink>
 			              </NavItem>
-
+			              <AddMap modal={this.state.modal} ref = "addMap"/>
 			         </Nav>
 	              </Navbar>
 			</div>
