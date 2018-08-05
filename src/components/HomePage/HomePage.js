@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
-import { Container, Row, Collapse } from 'reactstrap';
+import { Container, Row, Collapse, Col } from 'reactstrap';
 import '../../App.css';
 
 import AuthUserContext from '../auth/AuthUserContext';
+import SignOutButton from '../auth/SignOut';
+import LoginButton from '../auth/LoginButton';
+import SignUpButton from '../auth/SignUpButton';
 
 import ImageBox from "../../utils/ImageBox/ImageBox";
 import NavHeader from '../../utils/NavHeader/NavHeader';
@@ -69,16 +72,21 @@ export default class HomePage extends Component {
         'pins' : []
       },
     };
-
+      // {authUser => authUser
+      //     ? <p> {authUser.email} </p>
+      //     : null
+      // }
     return (
       <div id='HomePage'>
       <NavHeader/>
+
       <AuthUserContext.Consumer>
-        {authUser => authUser
-          ? <p> {authUser.email} </p> 
-          : null
-        }
+          {authUser => authUser
+              ? <SignOutButton />
+              : <div><LoginButton /> <SignUpButton /></div>
+          }
       </AuthUserContext.Consumer>
+
         <Container fluid={true}>
           <div className='category-title'> most popular </div>
           <div className='category horizontal-scroll' onClick={ (e) => this.toggle(e)} style={{ marginBottom: '1rem' }}>

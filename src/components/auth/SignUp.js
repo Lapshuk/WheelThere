@@ -4,6 +4,8 @@ import '../../App.css';
 import * as firebase from "firebase";
 import NavHeader from '../../utils/NavHeader/NavHeader';
 import './Login.css'
+import SignOutButton from '../auth/SignOut';
+
 
 const INITIAL_STATE = {
     username: '',
@@ -121,8 +123,6 @@ export default class SignUpForm extends Component {
                         </p>
                     </Col>
                 </Row>
-
-
             </div>
         );
     }

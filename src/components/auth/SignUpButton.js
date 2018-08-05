@@ -5,7 +5,7 @@ import * as firebase from "firebase";
 
 export default class SignUpButton extends Component {
     handleClick = () => {
-        firebase.auth().signOut();
+        window.location.assign('/signup');
     };
     render() {
         return (
@@ -13,7 +13,7 @@ export default class SignUpButton extends Component {
                 type="button"
                 onClick={this.handleClick}>
 
-                Sign Out
+                Sign Up
             </Button>
         );
     }

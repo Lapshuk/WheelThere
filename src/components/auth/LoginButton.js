@@ -3,9 +3,10 @@ import { Container, Row, Collapse, Button } from 'reactstrap';
 import '../../App.css';
 import * as firebase from "firebase";
 
-export default class SignUpButton extends Component {
+
+export default class LoginButton extends Component {
     handleClick = () => {
-        firebase.auth().signOut();
+        window.location.assign('/login');
     };
     render() {
         return (
@@ -13,7 +14,7 @@ export default class SignUpButton extends Component {
                 type="button"
                 onClick={this.handleClick}>
 
-                Sign Out
+                Log In
             </Button>
         );
     }
