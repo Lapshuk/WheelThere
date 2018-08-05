@@ -32,7 +32,7 @@ export default class LoginForm extends Component {
           console.log(data);
           console.log('Logged in!');
           console.log(firebase.User);
-
+          window.location.assign('/');
         }.bind(this)).catch(function(error) {
 
           // Handle Errors here.

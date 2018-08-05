@@ -33,7 +33,12 @@ export default class SignUpForm extends Component {
             passwordOne,
         } = this.state;
 
-        firebase.auth().createUserWithEmailAndPassword(email, passwordOne).catch(function(error) {
+        firebase.auth().createUserWithEmailAndPassword(email, passwordOne).then(function(data) {
+            console.log(data);
+            console.log('Signed Up!');
+            console.log(firebase.User);
+            window.location.assign('/');
+        }).catch(function(error) {
           // Handle Errors here.
           var errorCode = error.code;
           var errorMessage = error.message;
