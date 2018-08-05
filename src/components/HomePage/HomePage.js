@@ -2,11 +2,6 @@ import React, {Component} from 'react';
 import { Container, Row, Collapse, Col } from 'reactstrap';
 import '../../App.css';
 
-import AuthUserContext from '../auth/AuthUserContext';
-import SignOutButton from '../auth/SignOut';
-import LoginButton from '../auth/LoginButton';
-import SignUpButton from '../auth/SignUpButton';
-
 import ImageBox from "../../utils/ImageBox/ImageBox";
 import NavHeader from '../../utils/NavHeader/NavHeader';
 import './HomePage.css';
@@ -79,13 +74,6 @@ export default class HomePage extends Component {
     return (
       <div id='HomePage'>
       <NavHeader/>
-
-      <AuthUserContext.Consumer>
-          {authUser => authUser
-              ? <SignOutButton />
-              : <div><LoginButton /> <SignUpButton /></div>
-          }
-      </AuthUserContext.Consumer>
 
         <Container fluid={true}>
           <div className='category-title'> most popular </div>

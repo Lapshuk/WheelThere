@@ -8,7 +8,7 @@ import Submit from "./components/MapView/Submit.js"
 import MyAccount from "./components/MyAccount/MyAccount.js"
 import TripDetails from "./components/TripDetails/TripDetails.js"
 import LoginForm from "./components/auth/Login.js"
-import SignOutButton from "./components/auth/SignOut.js"
+import SignOutButton from "./components/auth/SignOutButton.js"
 import SignUpForm from "./components/auth/SignUp.js"
 
 import withAuthentication from './components/auth/WithAuthentication.js';

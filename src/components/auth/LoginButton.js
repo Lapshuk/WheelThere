@@ -2,20 +2,27 @@ import React, {Component} from 'react';
 import { Container, Row, Collapse, Button } from 'reactstrap';
 import '../../App.css';
 import * as firebase from "firebase";
-
+import { NavLink } from 'reactstrap';
 
 export default class LoginButton extends Component {
     handleClick = () => {
         window.location.assign('/login');
     };
+
     render() {
         return (
-            <Button
-                type="button"
+            <NavLink
                 onClick={this.handleClick}>
 
                 Log In
-            </Button>
+            </NavLink>
         );
     }
 }
+
+{/*<Button*/}
+    {/*type="button"*/}
+    {/*onClick={this.handleClick}>*/}
+
+    {/*Log In*/}
+{/*</Button>*/}
