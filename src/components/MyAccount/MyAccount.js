@@ -28,30 +28,27 @@ export default class MyAccount extends Component {
     //db querying
     const db = firebase.firestore();
     //getting all users
-    var usersRef = db.collection('users');
+    var usersRef = db.collection('users').doc(this.props.match.params.userId);
     //filtering users by ID
-    var query = usersRef.where('user_id', '==', this.props.match.params.userId);
-    query.get().then(snapshot => {
-      snapshot.forEach(user => {
-        var data = user.data();
-        //setting state with received data
-        this.setState({
-          about: data.about,
-          profile_image: data.image,
-          email: data.email,
-          first_name: data.first_name,
-          last_name: data.last_name,
-          my_trips: data.maps.my_trips,
-          saved_trips: data.maps.saved_trips,
-          password: data.password,
-          set: true
-        });
+    usersRef.get().then((user) => {
+      var data = user.data();
+      //setting state with received data
+      this.setState({
+        about: data.about,
+        profile_image: data.image,
+        email: data.email,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        my_trips: data.maps.my_trips,
+        saved_trips: data.maps.saved_trips,
+        password: data.password,
+        set: true
       });
     });
   };
 
   loadSavedTrips = () => {
-    if(this.state.set == true){
+    if (this.state.set == true) {
       return (<SavedTrips tripIds={this.state.saved_trips}/>);
     }
   };
