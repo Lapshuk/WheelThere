@@ -5,7 +5,7 @@ import MapView from "./components/MapView/MapView.js"
 import MyAccount from "./components/MyAccount/MyAccount.js"
 import TripDetails from "./components/TripDetails/TripDetails.js"
 import Submit from "./components/MapView/Submit.js"
-
+import NewTrip from "./components/NewTrip/NewTrip.js"
 
 import {BrowserRouter} from 'react-router-dom'
 import {Route} from 'react-router-dom';
@@ -32,6 +32,7 @@ class App extends Component {
             <Route path="/myaccount/:userId" component={MyAccount}/>
             <Route path="/tripdetails/:tripId" component={TripDetails}/>
             <Route path="/submitPin/:tripId" component={Submit}/>
+            <Route path="/newtrip/:userId" component={NewTrip}/>
           </div>
         </BrowserRouter>
     );
