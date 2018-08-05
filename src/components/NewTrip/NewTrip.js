@@ -17,7 +17,7 @@ export default class NewTrip extends Component {
       name: "",
       pins: [],
       image: null,
-      stars : 0
+      stars: 0
     };
     this.userId = props.match.params.userId;
   };
@@ -29,12 +29,12 @@ export default class NewTrip extends Component {
     db.settings(settings);
     var tripsRef = db.collection('trips');
     tripsRef.add({
-      name : this.state.name,
-      owner_id : this.userId,
-      pins : [],
-      stars : this.state.stars,
+      name: this.state.name,
+      owner_id: this.userId,
+      pins: [],
+      stars: this.state.stars,
       upVotes: this.state.upVotes,
-    }).then(function (docRef){
+    }).then(function (docRef) {
       //TODO this prints the id of the new trip. This info is needed when creating pins for this trip
       console.log(docRef.id);
     });
@@ -48,8 +48,6 @@ export default class NewTrip extends Component {
         </div>
     );
   }
-
-
 
 
 }
