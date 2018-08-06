@@ -9,12 +9,12 @@ export default class PinDisplay extends Component{
 		}
 	}
 	render(){
-		console.log("called a pin display");
+		console.log("returned another div");
 		return (
 			<div> 
-				<img src = {this.state.image}/>
-				<br/>
 				<div> {this.state.title} </div>
+				<img style={{width: '100%', height: '100%'}}src = {this.state.image}/>
+				<br/>
 			</div>
 		);
 	}

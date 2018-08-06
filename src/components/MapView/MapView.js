@@ -24,11 +24,17 @@ export default class MapView extends Component {
     
     tripRef.get().then((trip) => {
       var pins = trip.data().pins;
-      console.log(pins);
       for (var i = 0; i < pins.length; i++){
         pinRef.doc(pins[i]).get().then((rec)=>{
           var p = rec.data();
           this.state.pin_ids[rec.id] = {description: p.description, image: p.image};
+
+            if (pins.length == Object.keys(this.state.pin_ids).length){
+              this.setState({
+                loaded: true,
+            });
+            //chain async call
+          }
         });
       }
     });
@@ -37,11 +43,20 @@ export default class MapView extends Component {
     this.getAllPins();
   }
   showPins(){
-    for(var key in this.state.pin_ids){
-      console.log("inside the dictionary");
-      var image = this.state.pin_ids[key].image;
-      var description = this.state.pin_ids[key].description;
-      return <PinDisplay id = {'pin' + key} image = {image} title = {description}/>
+    if (this.state.loaded){
+      {
+      var x = [];
+      Object.keys(this.state.pin_ids).map((key) => {
+        console.log(key);
+        var image = this.state.pin_ids[key].image;
+        var description = this.state.pin_ids[key].description;
+          x.push(<PinDisplay id = {'pin' + key} image = {image} title = {description}/>);
+        });
+        return x;
+      }
+    }
+    else{
+
     }
   }
   render() {
@@ -50,12 +65,12 @@ export default class MapView extends Component {
           <NavHeader/>
           <Row>
             <Col id='left-column' xs="2">
-              <div className="maps-container">
-                Left panel
-                {this.showPins()}
+              <div className="shadow maps-container">
+                <h5> Pins </h5>
+                  {this.showPins()}
               </div>
               <div className="drag-container">
-                <div className="box-border">
+                <div className="box-border shadow">
                   <img style={{width: '30px', height: '50px'}}
                        src="https://i.pinimg.com/originals/f2/57/78/f25778f30e29a96c44c4f72ef645aa63.png"/>
                   <p>Drag to add to the map.</p>
