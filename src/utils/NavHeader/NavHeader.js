@@ -40,13 +40,13 @@ export default class NavHeader extends Component{
 		         			 <Input className="searchBar" type="search" name="searc" id="searchBar" placeholder="search" />
 			              </NavItem>
 			              <NavItem>
-			                <NavLink onClick = {this.toggleMapModal} >Add map</NavLink>
+			                <NavLink href='/' onClick = {this.toggleMapModal} >Add map</NavLink>
 			              </NavItem>
-			              <NavItem>
-			                <NavLink >Messages</NavLink>
+			              <NavItem >
+			                <NavLink href='/'>Messages</NavLink>
 			              </NavItem>
-			              <NavItem>
-			                <NavLink >Account</NavLink>
+			              <NavItem >
+			                <NavLink href='/'>Account</NavLink>
 			              </NavItem>
 			              <AddMap modal={this.state.modal} ref = "addMap"/>
 			         </Nav>

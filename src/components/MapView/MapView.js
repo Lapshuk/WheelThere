@@ -5,7 +5,13 @@ import {Container, Row, Col} from 'reactstrap';
 import '../../App.css';
 
 export default class MapView extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      tripId: props.match.params.tripId
+    }
 
+  }
   render() {
     return (
         <div>
@@ -24,7 +30,7 @@ export default class MapView extends Component {
               </div>
             </Col>
             <Col id="mapwrapper" xs="10" style={{width: '100vw', height: '100vh'}}>
-              <MapWrapper/>
+              <MapWrapper tripId = {this.state.tripId} />
             </Col>
 
           </Row>

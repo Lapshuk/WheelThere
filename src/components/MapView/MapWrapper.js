@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {ReactDOM} from 'react';
-import AddPin from '../../utils/AddPin/AddPin'
+import AddPin from '../../utils/AddPin/AddPin';
+import PinInfo from '../../utils/PinInfo/PinInfo';
 import $ from 'jquery';
 
 //asynchronous loading magic
@@ -15,33 +16,53 @@ var EIFFEL_TOWER_POSITION = {
   lat: 48.858608,
   lng: 2.294471
 };
-
 var map; //global name space, because react is stupid as f
 
-
 export default class MapWrapper extends Component {
-    constructor(){
-      super();
-      this.togglePinModal = this.togglePinModal.bind(this);
+    constructor(props){
+      super(props);
+      this.togglePinAddModal = this.togglePinAddModal.bind(this);
+      this.togglePinInfoModal = this.togglePinInfoModal.bind(this);
+      this.setActiveLatLng = this.setActiveLatLng.bind(this);
+
       this.state={
-        modal: false
+        tripId: props.tripId,
+        pinAddModal: false,
+        pinInfoModal: false,
+        lat: EIFFEL_TOWER_POSITION.lat,
+        lon: EIFFEL_TOWER_POSITION.lon,
       }
     }
-    togglePinModal(){
+    setActiveLatLng(lat, lng){
       this.setState({
-        modal: true
+        lat: lat,
+        lon: lng
+      });
+    }
+    togglePinAddModal(){
+      this.setState({
+        pinAddModal: true,
+        pinInfoModal: false
+      });
+    }
+    togglePinInfoModal(){
+      this.setState({
+        pinAddModal: false,
+        pinInfoModal: true
       });
     }
     createMarker(latLng){
         //used in the reres function;
-
       var marker = new window.google.maps.Marker({
           position: latLng,
           map: map
       });
+      //add click event listener to the marker
+      var self_reference = this;
       marker.addListener('click', function(evt){
-        alert('hahahahahahaha');
+        self_reference.togglePinInfoModal(); 
       });
+
     }
     componentDidMount() {
           // Connect the initMap() function within this class to the global window context,
@@ -53,8 +74,6 @@ export default class MapWrapper extends Component {
       }
       
       initMap() {
-          console.log(window.google);
-          console.log(this.refs);
           map = new window.google.maps.Map(this.refs.map, {
             center: EIFFEL_TOWER_POSITION,
             zoom: 16
@@ -84,8 +103,9 @@ export default class MapWrapper extends Component {
             var p = new window.google.maps.Point(e.x, e.y);
             var latlng = point2LatLng(p, map);
             e.dataTransfer.dropEffect = 'copy';
-            self_reference.createMarker(latlng); //jesus christ this is ugly
-            self_reference.togglePinModal();
+            self_reference.setActiveLatLng(latlng.lat(), latlng.lng());
+            self_reference.createMarker(latlng); 
+            self_reference.togglePinAddModal();
             return false;
           });
 
@@ -93,11 +113,10 @@ export default class MapWrapper extends Component {
       render() {
           return (
               <div ref="map" style={{height: '100%', width: '100%'}}>
-                  <AddPin modal={this.state.modal} ref = "addPin"/>
+                  <AddPin modal={this.state.pinAddModal} tripId={this.state.tripId} lat={this.state.lat} lon = {this.state.lon} ref = "addPin"/>
+                  <PinInfo modal={this.state.pinInfoModal} ref = "addPin"/>
                </div>
-
           );
-    
       }
 }
  
