@@ -76,6 +76,7 @@ export default class LoginForm extends Component {
                               onChange={event => this.setState(byPropKey('email', event.target.value))}
                               type="text"
                               placeholder="Email Address"
+                              required
                           />
                           <Input
                               className="field"
@@ -83,6 +84,7 @@ export default class LoginForm extends Component {
                               onChange={event => this.setState(byPropKey('password', event.target.value))}
                               type="password"
                               placeholder="Password"
+                              required
                           />
                           <Button
                               className="field"

@@ -98,6 +98,7 @@ export default class SignUpForm extends Component {
                             onChange={event => this.setState(byPropKey('firstName', event.target.value))}
                             type="text"
                             placeholder="First Name"
+                            required
                         />
                         <Input
                             className="field"
@@ -105,6 +106,7 @@ export default class SignUpForm extends Component {
                             onChange={event => this.setState(byPropKey('lastName', event.target.value))}
                             type="text"
                             placeholder="Last Name"
+                            required
                         />
 
                         <Input
@@ -113,6 +115,7 @@ export default class SignUpForm extends Component {
                             onChange={event => this.setState(byPropKey('email', event.target.value))}
                             type="text"
                             placeholder="Email Address"
+                            required
                         />
                         <Input
                             className="field"
@@ -120,6 +123,7 @@ export default class SignUpForm extends Component {
                             onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
                             type="password"
                             placeholder="Password"
+                            required
                         />
                         <Input
                             className="field"
@@ -127,6 +131,7 @@ export default class SignUpForm extends Component {
                             onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
                             type="password"
                             placeholder="Confirm Password"
+                            required
                         />
 
                         <Button
