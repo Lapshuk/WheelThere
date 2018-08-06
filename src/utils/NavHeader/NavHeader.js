@@ -54,7 +54,7 @@ export default class NavHeader extends Component {
               </NavbarBrand>
               <Nav navbar>
                 <NavItem>
-                  <Input className="searchBar" type="search" name="searc" id="searchBar" placeholder="search"/>
+                  <Input className="searchBar" type="search" name="search" id="searchBar" placeholder="search"/>
                 </NavItem>
                 <NavItem>
                   <NavLink onClick={this.toggleMapModal}>Add map</NavLink>

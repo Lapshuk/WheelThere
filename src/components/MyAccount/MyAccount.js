@@ -4,8 +4,9 @@ import './MyAccount.css';
 import * as firebase from 'firebase';
 import MyTrips from "../../utils/MyTrips/MyTrips.js";
 import SavedTrips from "../../utils/SavedTrips/SavedTrips.js";
-import {Container, Row, Col} from 'reactstrap';
+import {Button, Container, Row, Col} from 'reactstrap';
 import NavHeader from '../../utils/NavHeader/NavHeader';
+import AuthUserContext from '../../components/auth/AuthUserContext';
 
 export default class MyAccount extends Component {
 
@@ -57,6 +58,13 @@ export default class MyAccount extends Component {
     }
   };
 
+  toggleMapModal(e) {
+      e.preventDefault();
+      this.setState({
+          modal: true
+      });
+  }
+
   render() {
     return (
         <div className="App">
@@ -66,7 +74,23 @@ export default class MyAccount extends Component {
             <div>
               <img src="https://t3.ftcdn.net/jpg/00/64/67/80/240_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg" className="account-picture" />
             </div>
-            <a href="">edit profile</a>
+
+            {/*<AuthUserContext.Consumer>*/}
+                {/*{authUser => (authUser && authUser.uid === this.userId)*/}
+                    {/*? <a href={"/editprofile/" + authUser.uid} >edit profile</a>*/}
+                    {/*: <a></a>*/}
+                {/*}*/}
+            {/*</AuthUserContext.Consumer>*/}
+
+            <AuthUserContext.Consumer>
+                {authUser => (authUser && authUser.uid === this.userId)
+                    ? <Button className="field"
+                              onClick={this.toggleMapModal}>
+                        edit profile</Button>
+                    : <a></a>
+                }
+            </AuthUserContext.Consumer>
+
             <h3>{this.state.first_name} {this.state.last_name}</h3>
 
             <p>{this.state.my_trips.length} Maps</p>
