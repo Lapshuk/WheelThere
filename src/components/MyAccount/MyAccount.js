@@ -70,23 +70,24 @@ export default class MyAccount extends Component {
                    className="account-picture"/>
             </div>
 
-            {/*<AuthUserContext.Consumer>*/}
-                {/*{authUser => (authUser && authUser.uid === this.userId)*/}
-                    {/*? <a href={"/editprofile/" + authUser.uid} >edit profile</a>*/}
-                    {/*: <a></a>*/}
-                {/*}*/}
-            {/*</AuthUserContext.Consumer>*/}
-
             <h3>{this.state.first_name} {this.state.last_name}</h3>
 
               <AuthUserContext.Consumer>
                   {authUser => (authUser && authUser.uid === this.state.userId)
-                      ? <Button className="field"
-                                onClick={this.toggleMapModal}>
-                          edit profile</Button>
+                      ? <a href={"/editprofile/" + authUser.uid} >edit profile</a>
                       : <a></a>
                   }
               </AuthUserContext.Consumer>
+
+              {/*<AuthUserContext.Consumer>*/}
+                  {/*{authUser => (authUser && authUser.uid === this.state.userId)*/}
+                      {/*? <Button className="field"*/}
+                                {/*onClick={this.toggleMapModal}>*/}
+                          {/*edit profile</Button>*/}
+                      {/*: <a></a>*/}
+                  {/*}*/}
+              {/*</AuthUserContext.Consumer>*/}
+
             {/*<p>{this.state.my_trips.length} Maps</p>*/}
             <p>{this.state.about}</p>
 
