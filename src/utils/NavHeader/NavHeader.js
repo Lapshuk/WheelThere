@@ -49,14 +49,12 @@ export default class NavHeader extends Component{
 			              <NavItem>
 			                <NavLink >Messages</NavLink>
 			              </NavItem>
-			              <NavItem>
-			                <NavLink >Account</NavLink>
-			              </NavItem>
+
 
 										<AuthUserContext.Consumer>
 											{authUser => authUser
 												? <NavItem>
-															<NavLink>Welcome {authUser.email}!</NavLink>
+															<NavLink>Welcome {authUser.firstName}!</NavLink>
 													</NavItem>
 												: <NavItem>
 															<LoginButton/>
@@ -66,12 +64,41 @@ export default class NavHeader extends Component{
 
 										<AuthUserContext.Consumer>
 												{authUser => authUser
-														? <SignOutButton />
+														? <div>
+                                <NavItem>
+                                  <SignOutButton />
+                                </NavItem>
+                              </div>
 														: <NavItem>
 																<SignUpButton/>
 															</NavItem>
 												}
 										</AuthUserContext.Consumer>
+
+                    <AuthUserContext.Consumer>
+												{authUser => authUser
+														? <div>
+                                <NavItem>
+                                  <SignOutButton />
+                                </NavItem>
+                              </div>
+														: <NavItem>
+																<SignUpButton/>
+															</NavItem>
+												}
+										</AuthUserContext.Consumer>
+
+
+                    <AuthUserContext.Consumer>
+                        {authUser => authUser
+                            ? <div>
+                                <NavItem>
+                                  <Account />
+                                </NavItem>
+                              </div>
+                            : null
+                        }
+                    </AuthUserContext.Consumer>
 
 			              <AddMap modal={this.state.modal} ref = "addMap"/>
 			         </Nav>
