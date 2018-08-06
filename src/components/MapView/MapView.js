@@ -8,14 +8,6 @@ import * as firebase from "firebase";
 
 
 export default class MapView extends Component {
-  constructor(props) {
-    super(props);
-    console.log(props);
-
-
-  }
-
-
   constructor(props){
     super(props);
     this.state = {
