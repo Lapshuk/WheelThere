@@ -7,7 +7,8 @@ import './Login.css'
 
 
 const INITIAL_STATE = {
-    username: '',
+    firstName: '',
+    lastName: '',
     email: '',
     passwordOne: '',
     passwordTwo: '',
@@ -27,7 +28,8 @@ export default class SignUpForm extends Component {
 
     onSubmit = (event) => {
         const {
-            username,
+            firstName,
+            lastName,
             email,
             passwordOne,
         } = this.state;
@@ -36,6 +38,8 @@ export default class SignUpForm extends Component {
             console.log(data);
             console.log('Signed Up!');
             console.log(firebase.User);
+            console.log(firstName);
+            console.log(lastName);
             window.location.assign('/');
         }).catch(function(error) {
           // Handle Errors here.
@@ -51,7 +55,8 @@ export default class SignUpForm extends Component {
 
     render() {
         const {
-            username,
+            firstName,
+            lastName,
             email,
             passwordOne,
             passwordTwo,
@@ -61,8 +66,7 @@ export default class SignUpForm extends Component {
         const isInvalid =
             passwordOne !== passwordTwo ||
             passwordOne === '' ||
-            email === '' ||
-            username === '';
+            email === ''
 
         return (
             <div>
@@ -79,11 +83,19 @@ export default class SignUpForm extends Component {
                     <Form onSubmit={this.onSubmit}>
                         <Input
                             className="field"
-                            value={username}
-                            onChange={event => this.setState(byPropKey('username', event.target.value))}
+                            value={firstName}
+                            onChange={event => this.setState(byPropKey('firstName', event.target.value))}
                             type="text"
-                            placeholder="Username"
+                            placeholder="First Name"
                         />
+                        <Input
+                            className="field"
+                            value={lastName}
+                            onChange={event => this.setState(byPropKey('lastName', event.target.value))}
+                            type="text"
+                            placeholder="Last Name"
+                        />
+
                         <Input
                             className="field"
                             value={email}
