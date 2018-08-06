@@ -89,7 +89,7 @@ export default class NavHeader extends Component {
                   {authUser => authUser
                       ? <div>
                         <NavItem>
-                          <NavLink onClick={() => firebase.auth().signOut()}>Sign Out</NavLink>
+                          <NavLink onClick={() => firebase.auth().signOut().then(window.location.assign('/'))}>Sign Out</NavLink>
                         </NavItem>
                       </div>
                       : <NavItem>

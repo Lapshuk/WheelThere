@@ -66,11 +66,8 @@ export default class MyAccount extends Component {
             <div>
               <img src="https://t3.ftcdn.net/jpg/00/64/67/80/240_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg" className="account-picture" />
             </div>
-
             <a href="">edit profile</a>
             <h3>{this.state.first_name} {this.state.last_name}</h3>
-
-
 
             <p>{this.state.my_trips.length} Maps</p>
             <p>{this.state.about}</p>
