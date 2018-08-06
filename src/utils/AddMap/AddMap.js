@@ -3,7 +3,6 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 export default class AddMap extends React.Component {
   constructor(props) {
-    console.log(props);
     super(props);
     this.state = {
       modal: props.modal

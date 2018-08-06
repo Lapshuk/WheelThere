@@ -28,6 +28,7 @@ export default class MapWrapper extends Component {
       this.add_id = this.add_id.bind(this);
       this.state={
         pid: '',
+        shouldDisplay: false,
         tripId: props.tripId,
         pinAddModal: false,
         pinInfoModal: false,
@@ -36,8 +37,13 @@ export default class MapWrapper extends Component {
         latlngmap: {} //empty hashmap
       }
     }
+    get_key(lat, lng){
+      var newLat = lat.toFixed(7);
+      var newLon = lng.toFixed(7);
+      return newLat.toString() + newLon.toString();
+    }
     add_id(id, lat, lng){
-      var key = lat.toString() + lng.toString();
+      var key = this.get_key(lat, lng);
       this.state.latlngmap[key] = id; //add to hashmap
     }
     setActiveLatLng(lat, lng){
@@ -53,27 +59,31 @@ export default class MapWrapper extends Component {
       var pinRef = db.collection('pins');
       tripRef.get().then((trip) => {
         var pins = trip.data().pins;
-        for(var pin in pins){
-          pinRef.doc(pins[pin]).get().then((rec)=>{
+        for (var i = 0; i < pins.length; i++){
+          //concurrency wooh
+          pinRef.doc(pins[i]).get().then((rec)=>{
             var p = rec.data();
             var temp_l = new window.google.maps.LatLng(p.lat, p.lon);
-            this.add_id(pins[pin], p.lat, p.lon);
+            this.add_id(rec.id, p.lat, p.lon);
             this.createMarker(temp_l);
           });
         }
-      })
+        console.log(this.state.latlngmap);
+
+      });
     }
 
     togglePinAddModal(){
       this.setState({
+        shouldDisplay: false,
         pinAddModal: true,
-        pinInfoModal: false
+        pinInfoModal: false,
       });
     }
     togglePinInfoModal(lat, lon){
-      var key = lat.toString() + lon.toString();
-
+      var key = this.get_key(lat, lon);
       this.setState({
+        shouldDisplay: true,
         pid: this.state.latlngmap[key],
         pinAddModal: false,
         pinInfoModal: true
@@ -143,7 +153,7 @@ export default class MapWrapper extends Component {
           return (
               <div ref="map" style={{height: '100%', width: '100%'}}>
                   <AddPin modal={this.state.pinAddModal} add_id = {this.add_id} tripId={this.state.tripId} lat={this.state.lat} lon = {this.state.lon} ref = "addPin"/>
-                  <PinInfo pid = {this.state.pid} modal={this.state.pinInfoModal} ref = "addPin"/>
+                  <PinInfo shouldDisplay= {this.state.shouldDisplay}  pid = {this.state.pid} modal={this.state.pinInfoModal} ref = "addPin"/>
                </div>
           );
       }

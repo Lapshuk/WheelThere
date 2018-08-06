@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import * as firebase from "firebase";
+import { Container, Row, Col } from 'reactstrap';
 
 export default class PinInfo extends React.Component {
   constructor(props) {
@@ -19,12 +20,13 @@ export default class PinInfo extends React.Component {
     });
   }
   getPinInfo(pid, modal) {
+    
     const db = firebase.firestore();
     var pinRef = db.collection('pins');
     pinRef.doc(pid).get().then((rec)=>{
       //assumes get doesn't shit itself
       var pind = rec.data();
-      console.log(pind);
+      console.log(pind.image);
       this.setState({
         description: pind.description,
         address: pind.address,
@@ -41,13 +43,22 @@ export default class PinInfo extends React.Component {
     });
   }
   componentWillReceiveProps(newProps) {
-    this.getPinInfo(newProps.pid, newProps.modal);
+    console.log(newProps);
+    if (newProps.shouldDisplay){
+      //fucking jank ass code
+      this.getPinInfo(newProps.pid, newProps.modal);
+    }
   }
   render() {
+
     return (
       <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
         <ModalBody>
-          <img src = {this.state.image}/>
+          <Row>
+            <Col>
+              <img style={{width: '80%', height:'80%'}}src = {this.state.image}/>
+            </Col>
+          </Row>
           <h4> <b>Description: </b>{this.state.description}</h4>
           <br/>
           <h4> <b>Address: </b>{this.state.address}</h4>
@@ -59,7 +70,6 @@ export default class PinInfo extends React.Component {
           <h4><b>Fun: </b> {this.state.fun}</h4>
           <br/>
           <h4>Tip: {this.state.tip}</h4>
-
         </ModalBody>
       </Modal>
     );
