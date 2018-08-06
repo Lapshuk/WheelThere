@@ -60,15 +60,18 @@ export default class MapWrapper extends Component {
       var pinRef = db.collection('pins');
       tripRef.get().then((trip) => {
         var pins = trip.data().pins;
-        for (var i = 0; i < pins.length; i++){
-          //concurrency wooh
-          pinRef.doc(pins[i]).get().then((rec)=>{
-            var p = rec.data();
-            var temp_l = new window.google.maps.LatLng(p.lat, p.lon);
-            this.add_id(rec.id, p.lat, p.lon);
-            this.createMarker(temp_l);
-          });
+        if (pins != undefined){
+          for (var i = 0; i < pins.length; i++){
+            //concurrency wooh
+            pinRef.doc(pins[i]).get().then((rec)=>{
+              var p = rec.data();
+              var temp_l = new window.google.maps.LatLng(p.lat, p.lon);
+              this.add_id(rec.id, p.lat, p.lon);
+              this.createMarker(temp_l);
+            });
+          }
         }
+
       });
     }
 

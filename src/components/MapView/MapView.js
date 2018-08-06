@@ -25,18 +25,21 @@ export default class MapView extends Component {
     
     tripRef.get().then((trip) => {
       var pins = trip.data().pins;
-      for (var i = 0; i < pins.length; i++){
-        pinRef.doc(pins[i]).get().then((rec)=>{
-          var p = rec.data();
-          this.state.pin_ids[rec.id] = {description: p.description, image: p.image, lat: p.lat, lon:p.lon};
-            if (pins.length == Object.keys(this.state.pin_ids).length){
-              this.setState({
-                loaded: true,
-            });
-            //chain async call
-          }
-        });
+      if (pins != undefined){
+        for (var i = 0; i < pins.length; i++){
+          pinRef.doc(pins[i]).get().then((rec)=>{
+            var p = rec.data();
+            this.state.pin_ids[rec.id] = {description: p.description, image: p.image, lat: p.lat, lon:p.lon};
+              if (pins.length == Object.keys(this.state.pin_ids).length){
+                this.setState({
+                  loaded: true,
+              });
+              //chain async call
+            }
+          });
+        }
       }
+
     });
   }
   componentDidMount(){
