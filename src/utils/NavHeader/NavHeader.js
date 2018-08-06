@@ -12,10 +12,8 @@ import { Input } from 'reactstrap';
 import { FaBeer, FaAccessibleIcon, FaGooglePlusSquare} from 'react-icons/fa';
 
 import $ from 'jquery';
-import LoginButton from "../../components/auth/LoginButton";
-import SignUpButton from "../../components/auth/SignUpButton";
 import AuthUserContext from '../../components/auth/AuthUserContext';
-import SignOutButton from "../../components/auth/SignOutButton";
+import * as firebase from "firebase";
 
 export default class NavHeader extends Component{
 	constructor(){
@@ -44,11 +42,20 @@ export default class NavHeader extends Component{
 		         			 <Input className="searchBar" type="search" name="searc" id="searchBar" placeholder="search" />
 			              </NavItem>
 			              <NavItem>
-			                <NavLink onClick = {this.toggleMapModal} >Add map</NavLink>
+			                <NavLink onClick = {this.toggleMapModal}>Add map</NavLink>
 			              </NavItem>
 			              <NavItem>
 			                <NavLink >Messages</NavLink>
 			              </NavItem>
+
+										<AuthUserContext.Consumer>
+												{authUser => authUser
+														? <NavItem>
+																<NavLink href={"/myaccount/" + authUser.uid}>Account</NavLink>
+                            </NavItem>
+														: <NavItem></NavItem>
+												}
+										</AuthUserContext.Consumer>
 
 
 										<AuthUserContext.Consumer>
@@ -57,7 +64,7 @@ export default class NavHeader extends Component{
 															<NavLink>Welcome {authUser.firstName}!</NavLink>
 													</NavItem>
 												: <NavItem>
-															<LoginButton/>
+                              <NavLink href={"/login/"}>Log In</NavLink>
 													</NavItem>
 												}
 										</AuthUserContext.Consumer>
@@ -66,39 +73,14 @@ export default class NavHeader extends Component{
 												{authUser => authUser
 														? <div>
                                 <NavItem>
-                                  <SignOutButton />
+																		<NavLink onClick={() => firebase.auth().signOut()}>Sign Out</NavLink>
                                 </NavItem>
                               </div>
 														: <NavItem>
-																<SignUpButton/>
+                                <NavLink href={"/signup/"}>Sign Up</NavLink>
 															</NavItem>
 												}
 										</AuthUserContext.Consumer>
-
-                    <AuthUserContext.Consumer>
-												{authUser => authUser
-														? <div>
-                                <NavItem>
-                                  <SignOutButton />
-                                </NavItem>
-                              </div>
-														: <NavItem>
-																<SignUpButton/>
-															</NavItem>
-												}
-										</AuthUserContext.Consumer>
-
-
-                    <AuthUserContext.Consumer>
-                        {authUser => authUser
-                            ? <div>
-                                <NavItem>
-                                  <Account />
-                                </NavItem>
-                              </div>
-                            : null
-                        }
-                    </AuthUserContext.Consumer>
 
 			              <AddMap modal={this.state.modal} ref = "addMap"/>
 			         </Nav>
