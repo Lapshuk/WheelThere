@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import '../../App.css';
-import * as firebase from 'firebase'
+import './MyAccount.css';
+import * as firebase from 'firebase';
 import MyTrips from "../../utils/MyTrips/MyTrips.js";
 import SavedTrips from "../../utils/SavedTrips/SavedTrips.js";
 import {Container, Row, Col} from 'reactstrap';
@@ -19,8 +20,8 @@ export default class MyAccount extends Component {
       my_trips: "",
       saved_trips: "",
       password: "",
+      userId: props.match.params.userId
     };
-    this.userId = props.match.params.userId;
 
   };
 
@@ -28,30 +29,26 @@ export default class MyAccount extends Component {
     //db querying
     const db = firebase.firestore();
     //getting all users
-    var usersRef = db.collection('users');
-    //filtering users by ID
-    var query = usersRef.where('user_id', '==', this.props.match.params.userId);
-    query.get().then(snapshot => {
-      snapshot.forEach(user => {
-        var data = user.data();
-        //setting state with received data
-        this.setState({
-          about: data.about,
-          image: data.image,
-          email: data.email,
-          first_name: data.first_name,
-          last_name: data.last_name,
-          my_trips: data.maps.my_trips,
-          saved_trips: data.maps.saved_trips,
-          password: data.password,
-          set: true
-        });
+    var userRef = db.collection('users').doc(this.state.userId);
+    userRef.get().then((user) => {
+      var data = user.data();
+      this.setState({
+        about: data.about,
+        image: data.image,
+        email: data.email,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        saved_trips: data.saved_trips,
+        my_trips: data.my_trips,
+        set: true
       });
+
     });
-  };
+  }
+
 
   loadSavedTrips = () => {
-    if(this.state.set == true){
+    if (this.state.set == true) {
       return (<SavedTrips tripIds={this.state.saved_trips}/>);
     }
   };
@@ -60,32 +57,23 @@ export default class MyAccount extends Component {
     return (
         <div className="App">
           <NavHeader/>
-          <Row>
-            <Col>
-              <img src="https://i.ytimg.com/vi/YCaGYUIfdy4/maxresdefault.jpg"
-                   style={{width: '10vw', height: '15vh', borderRadius: '50%'}}/>
-            </Col>
-          </Row>
-          <Row>
-            <Col sm={{size: 'auto', offset: 3}}>
-              <a href="">edit profile</a>
-            </Col>
-          </Row>
+          <div className="account">
 
-          <Col>
+            <div>
+              <img src="https://t3.ftcdn.net/jpg/00/64/67/80/240_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg"
+                   className="account-picture"/>
+            </div>
+
+            <a href="">edit profile</a>
             <h3>{this.state.first_name} {this.state.last_name}</h3>
+
+
             <p>{this.state.my_trips.length} Maps</p>
             <p>{this.state.about}</p>
-          </Col>
 
-          <Row>
-            <MyTrips ownerId={this.userId}/>
-          </Row>
-
-          <Row>
+            <MyTrips userId={this.state.userId}/>
             {this.loadSavedTrips()}
-          </Row>
-          /*Map Objects Here*/
+          </div>
         </div>
     );
   }

@@ -108,7 +108,6 @@ export default class HomePage extends Component {
       </Container>
 
     }
-
     return (
         <div id='HomePage'>
           <NavHeader/>

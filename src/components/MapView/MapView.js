@@ -1,12 +1,20 @@
 import React, {Component} from 'react';
 import MapWrapper from './MapWrapper';
 import NavHeader from '../../utils/NavHeader/NavHeader';
-import {Container, Row, Col} from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import '../../App.css';
 import PinDisplay from '../../utils/PinDisplay/PinDisplay'
 import * as firebase from "firebase";
 
+
 export default class MapView extends Component {
+  constructor(props) {
+    super(props);
+    console.log(props);
+
+
+  }
+
 
   constructor(props){
     super(props);

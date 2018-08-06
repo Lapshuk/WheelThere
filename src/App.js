@@ -4,11 +4,17 @@ import HomePage from "./components/HomePage/HomePage.js"
 import MapView from "./components/MapView/MapView.js"
 import MyAccount from "./components/MyAccount/MyAccount.js"
 import TripDetails from "./components/TripDetails/TripDetails.js"
+import LoginForm from "./components/auth/Login.js"
+import SignUpForm from "./components/auth/SignUp.js"
+
+import withAuthentication from './components/auth/WithAuthentication.js';
 import Submit from "./components/MapView/Submit.js"
 import NewTrip from "./components/NewTrip/NewTrip.js"
 
 import {BrowserRouter} from 'react-router-dom'
 import {Route} from 'react-router-dom';
+
+import * as firebase from "firebase";
 
 
 import './App.css';
@@ -23,6 +29,15 @@ const Home = () => (
 );
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      text: ''
+    };
+  }
+
+
   render() {
     return (
         <BrowserRouter>
@@ -31,12 +46,14 @@ class App extends Component {
             <Route path="/mapview/:tripId" component={MapView}/>
             <Route path="/myaccount/:userId" component={MyAccount}/>
             <Route path="/tripdetails/:tripId" component={TripDetails}/>
-            <Route path="/submitPin/:tripId" component={Submit}/>
             <Route path="/newtrip/:userId" component={NewTrip}/>
+            <Route path="/login/" component={LoginForm} />
+            <Route path="/signup/" component={SignUpForm} />
+            <Route path="/submitpin/:tripId" component={Submit}/>
           </div>
         </BrowserRouter>
     );
   }
 }
 
-export default App;
+export default withAuthentication(App);
