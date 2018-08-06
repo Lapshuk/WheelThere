@@ -13,7 +13,6 @@ export default class LoginButton extends Component {
         return (
             <NavLink
                 onClick={this.handleClick}>
-
                 Log In
             </NavLink>
         );
