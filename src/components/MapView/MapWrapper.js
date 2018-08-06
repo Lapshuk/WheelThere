@@ -68,8 +68,6 @@ export default class MapWrapper extends Component {
             this.createMarker(temp_l);
           });
         }
-        console.log(this.state.latlngmap);
-
       });
     }
 
@@ -152,7 +150,7 @@ export default class MapWrapper extends Component {
       render() {
           return (
               <div ref="map" style={{height: '100%', width: '100%'}}>
-                  <AddPin modal={this.state.pinAddModal} add_id = {this.add_id} tripId={this.state.tripId} lat={this.state.lat} lon = {this.state.lon} ref = "addPin"/>
+                  <AddPin shouldDisplay= {this.state.shouldDisplay} modal={this.state.pinAddModal} add_id = {this.add_id} tripId={this.state.tripId} lat={this.state.lat} lon = {this.state.lon} ref = "addPin"/>
                   <PinInfo shouldDisplay= {this.state.shouldDisplay}  pid = {this.state.pid} modal={this.state.pinInfoModal} ref = "addPin"/>
                </div>
           );

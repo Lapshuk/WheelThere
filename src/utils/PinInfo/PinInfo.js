@@ -20,13 +20,11 @@ export default class PinInfo extends React.Component {
     });
   }
   getPinInfo(pid, modal) {
-    
     const db = firebase.firestore();
     var pinRef = db.collection('pins');
     pinRef.doc(pid).get().then((rec)=>{
       //assumes get doesn't shit itself
       var pind = rec.data();
-      console.log(pind.image);
       this.setState({
         description: pind.description,
         address: pind.address,
@@ -38,14 +36,13 @@ export default class PinInfo extends React.Component {
         fun: pind.fun,
         modal: modal,
         pid: pid,
-
       });
     });
   }
   componentWillReceiveProps(newProps) {
-    console.log(newProps);
-    if (newProps.shouldDisplay){
-      //fucking jank ass code
+    //fucking jank ass code, newProps.modal = should be on?
+    if (newProps.pid){
+      //sigh
       this.getPinInfo(newProps.pid, newProps.modal);
     }
   }
