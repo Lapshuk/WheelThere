@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import '../../App.css';
-import * as firebase from 'firebase'
+import './MyAccount.css';
+import * as firebase from 'firebase';
 import MyTrips from "../../utils/MyTrips/MyTrips.js";
 import SavedTrips from "../../utils/SavedTrips/SavedTrips.js";
 import {Container, Row, Col} from 'reactstrap';
@@ -60,31 +61,23 @@ export default class MyAccount extends Component {
     return (
         <div className="App">
           <NavHeader/>
-          <Row>
-            <Col>
-              <img src="https://i.ytimg.com/vi/YCaGYUIfdy4/maxresdefault.jpg"
-                   style={{width: '10vw', height: '15vh', borderRadius: '50%'}}/>
-            </Col>
-          </Row>
-          <Row>
-            <Col sm={{size: 'auto', offset: 3}}>
-              <a href="">edit profile</a>
-            </Col>
-          </Row>
+          <div className="account">
 
-          <Col>
+            <div>
+              <img src="https://t3.ftcdn.net/jpg/00/64/67/80/240_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg" className="account-picture" />
+            </div>
+
+            <a href="">edit profile</a>
             <h3>{this.state.first_name} {this.state.last_name}</h3>
+
+
+
             <p>{this.state.my_trips.length} Maps</p>
             <p>{this.state.about}</p>
-          </Col>
 
-          <Row>
             <MyTrips ownerId={this.userId}/>
-          </Row>
-
-          <Row>
             {this.loadSavedTrips()}
-          </Row>
+          </div>
           /*Map Objects Here*/
         </div>
     );
