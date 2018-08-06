@@ -24,6 +24,9 @@ body {
   overflow: scroll;
   padding: 10px;
 }
+#left-column{
+  padding: 0px;
+}
 .drag-container{
   position: absolute; 
   left: 0; 

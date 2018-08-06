@@ -12,7 +12,8 @@ export default class MapView extends Component {
     super(props);
     this.state = {
       tripId: props.match.params.tripId,
-      pin_ids: {}
+      pin_ids: {},
+      mapRef: React.createRef(),
     }
     this.getAllPins= this.getAllPins.bind(this);
     this.showPins = this.showPins.bind(this);
@@ -27,8 +28,7 @@ export default class MapView extends Component {
       for (var i = 0; i < pins.length; i++){
         pinRef.doc(pins[i]).get().then((rec)=>{
           var p = rec.data();
-          this.state.pin_ids[rec.id] = {description: p.description, image: p.image};
-
+          this.state.pin_ids[rec.id] = {description: p.description, image: p.image, lat: p.lat, lon:p.lon};
             if (pins.length == Object.keys(this.state.pin_ids).length){
               this.setState({
                 loaded: true,
@@ -48,9 +48,12 @@ export default class MapView extends Component {
       var x = [];
       Object.keys(this.state.pin_ids).map((key) => {
         console.log(key);
+
         var image = this.state.pin_ids[key].image;
         var description = this.state.pin_ids[key].description;
-          x.push(<PinDisplay id = {'pin' + key} image = {image} title = {description}/>);
+        var lat = this.state.pin_ids[key].lat;
+        var lon = this.state.pin_ids[key].lon;
+          x.push(<PinDisplay lat={lat} lon={lon} mapRef = {this.state.mapRef} id = {'pin' + key} image = {image} title = {description}/>);
         });
         return x;
       }
@@ -65,7 +68,7 @@ export default class MapView extends Component {
           <NavHeader/>
           <Row>
             <Col id='left-column' xs="2">
-              <div className="shadow maps-container">
+              <div className="maps-container">
                 <h5> Pins </h5>
                   {this.showPins()}
               </div>
@@ -78,11 +81,9 @@ export default class MapView extends Component {
               </div>
             </Col>
             <Col id="mapwrapper" xs="10" style={{width: '100vw', height: '100vh'}}>
-              <MapWrapper tripId = {this.state.tripId} />
+              <MapWrapper ref = {this.state.mapRef} tripId = {this.state.tripId} />
             </Col>
-
           </Row>
-
           <div className="sticky-right">
             <a href="/"><img style={{width: '70px', height: '70px'}}
                              src="http://www.free-icons-download.net/images/plus-icon-27951.png"/></a>
