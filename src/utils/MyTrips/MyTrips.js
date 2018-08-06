@@ -5,32 +5,22 @@ import * as firebase from "firebase";
 
 export default class MyTrips extends Component {
   constructor(props) {
-    super();
-    this.ownerId = props.ownerId;
+    super(props);
+    this.state = {
+      userId : props.userId,
+      myTrips : []
+    };
   }
 
   componentDidMount() {
-
-    //storage reference GETTING LINK
-    //TODO REMOVE NEXT 5 LINES LATER
-    var storage = firebase.storage();
-    var pathRef = storage.ref('trips/1/main.jpg');
-    pathRef.getDownloadURL().then(function(url) {
-      console.log(url);
-    });
-
     //db querying
     const db = firebase.firestore();
     //getting all users
-    var usersRef = db.collection('trips');
-    //filtering trips that have provided owner
-    var query = usersRef.where('owner_id', '==', this.ownerId);
-    query.get().then(snapshot => {
-      snapshot.forEach(trip => {
-        //HERE WE GETTING ALL TRIPS BY THIS USER
-        //DO SOMETHING WITH THEM
-        var curr_trip = trip.data();
-
+    var userRef = db.collection('users');
+    //getting the list of trips
+    userRef.doc(this.state.userId).get().then(user => {
+      this.setState({
+        myTrips : user.data().my_trips
       });
     });
   };
@@ -40,6 +30,7 @@ export default class MyTrips extends Component {
         <div className="App">
           <p>My Trips</p>
           /*Map Objects Here*/
+          {this.state.myTrips}
         </div>
     );
   }

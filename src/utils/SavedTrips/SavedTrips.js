@@ -16,17 +16,14 @@ export default class SavedTrips extends Component {
     var usersRef = db.collection('trips');
     //getting all trips from the saved_trips list
     for (let tripId of this.savedTripsList) {
-      var query = usersRef.where('trip_id', '==', tripId);
-      query.get().then(snapshot => {
-        snapshot.forEach(trip => {
-          //HERE WE GETTING ALL TRIPS BY THEIR IDs
-          //DO SOMETHING WITH THEM
-          var curr_trip = trip.data();
-          //console.log(curr_trip);
-        });
+      console.log(this.savedTripsList.length);
+      usersRef.doc(tripId).get().then(trip =>{
+        var tripData = trip.data();
+        //TODO here we looping over all saved trips
       });
     }
-  };
+    }
+
 
   render() {
     return (

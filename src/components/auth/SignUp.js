@@ -45,7 +45,8 @@ export default class SignUpForm extends Component {
         email : email,
         first_name: firstName,
         last_name: lastName,
-        saved_maps : [],
+        saved_trips : [],
+        my_trips : [],
         image: null
       }).then(()=>{
         window.location.assign('/');
