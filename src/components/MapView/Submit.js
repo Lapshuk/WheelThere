@@ -2,14 +2,13 @@ import React, {Component} from 'react';
 import MapWrapper from './MapWrapper';
 import NavHeader from '../../utils/NavHeader/NavHeader';
 import {Container, Row, Col} from 'reactstrap';
-import {Button, Form, FormGroup, Label, Input, FormText} from 'reactstrap';
+import {CustomInput, Button, Form, FormGroup, Label, Input, FormText} from 'reactstrap';
 
 import '../../App.css';
 import * as firebase from "firebase";
 
 
 export default class Submit extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -161,59 +160,6 @@ export default class Submit extends Component {
         <div>
 
           <NavHeader/>
-
-          <Row>
-            <Col xs="4"></Col>
-            <Col xs="4">
-              <Form onSubmit={this.postPin}>
-                <FormGroup>
-                  <Label for="Description">Description</Label>
-                  <Input type="textarea" name="text" id="Description" value={this.state.description}
-                         onChange={this.handleDescriptionChange}/>
-                </FormGroup>
-
-                <FormGroup>
-                  <Label for="Address">Address</Label>
-                  <Input type="textarea" name="text" id="Address" value={this.state.address}
-                         onChange={this.handleAddressChange}/>
-                </FormGroup>
-
-                <FormGroup>
-                  <Label for="Lat">Lat</Label>
-                  <Input type="Number" name="text" id="Lat" value={this.state.lat} onChange={this.handleLatChange}/>
-                </FormGroup>
-
-                <FormGroup>
-                  <Label for="Lon">Lon</Label>
-                  <Input type="Number" name="text" id="exampleText" value={this.state.lon}
-                         onChange={this.handleLonChange}/>
-                </FormGroup>
-
-                <FormGroup>
-                  <Label for="Access">Accessibility</Label>
-                  <Input type="Number" name="text" id="fun" placeholder="Fun" value={this.state.fun}
-                         onChange={this.handleFunChange}/>
-                  <Input type="Number" name="text" id="bathroom" placeholder="Bathroom" value={this.state.bathroom}
-                         onChange={this.handleBathroomChange}/>
-                  <Input type="Number" name="text" id="rollability" placeholder="Rollability"
-                         value={this.state.rollability} onChange={this.handleRollabilityChange}/>
-                  <Input type="Number" name="text" id="transport" placeholder="Transport" value={this.state.transport}
-                         onChange={this.handleTransportChange}/>
-                </FormGroup>
-
-                <FormGroup>
-                  <Input type="textarea" name="tip" id="tip" placeholder="Any tips?" value={this.state.tip}
-                         onChange={this.handleTipChange}/>
-                </FormGroup>
-
-                <FormGroup>
-                  <Input type="file" name="picture" id="picture" onChange={this.handleFileChange}/>
-                </FormGroup>
-                <Button type="submit" color="secondary">Submit</Button>
-              </Form>
-            </Col>
-            <Col xs="4"></Col>
-          </Row>
 
         </div>
     );

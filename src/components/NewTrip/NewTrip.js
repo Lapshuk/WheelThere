@@ -17,9 +17,10 @@ export default class NewTrip extends Component {
       name: "",
       pins: [],
       image: null,
-      stars: 0
+      stars: 0,
+      userId : props.match.params.userId
     };
-    this.userId = props.match.params.userId;
+
   };
 
   postTrip = () => {
@@ -30,13 +31,22 @@ export default class NewTrip extends Component {
     var tripsRef = db.collection('trips');
     tripsRef.add({
       name: this.state.name,
-      owner_id: this.userId,
+      owner_id: this.state.userId,
       pins: [],
       stars: this.state.stars,
-      upVotes: this.state.upVotes,
-    }).then(function (docRef) {
-      //TODO this prints the id of the new trip. This info is needed when creating pins for this trip
-      console.log(docRef.id);
+    }).then(function (trip) {
+      //TODO this returns the the new trip. This info is needed when creating pins for this trip.
+      //updating my_trips for the user
+      var userRef = db.collection('users').doc(this.state.userId);
+      userRef.get().then(user => {
+        //getting the current list
+        var tripsList = user.data().my_trips;
+        tripsList.push(trip.id);
+        //updating the list of my_trips
+        userRef.update({
+          my_trips : tripsList
+        });
+      });
     });
   };
 

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {ReactDOM} from 'react';
-import AddPin from '../../utils/AddPin/AddPin'
+import AddPin from '../../utils/AddPin/AddPin';
+import PinInfo from '../../utils/PinInfo/PinInfo';
 import $ from 'jquery';
+import * as firebase from "firebase";
 
 //asynchronous loading magic
 function loadJS(src) {
@@ -15,32 +17,87 @@ var EIFFEL_TOWER_POSITION = {
   lat: 48.858608,
   lng: 2.294471
 };
-
 var map; //global name space, because react is stupid as f
 
-
 export default class MapWrapper extends Component {
-    constructor(){
-      super();
-      this.togglePinModal = this.togglePinModal.bind(this);
+    constructor(props){
+      super(props);
+      this.togglePinAddModal = this.togglePinAddModal.bind(this);
+      this.togglePinInfoModal = this.togglePinInfoModal.bind(this);
+      this.setActiveLatLng = this.setActiveLatLng.bind(this);
+      this.add_id = this.add_id.bind(this);
       this.state={
-        modal: false
+        pid: '',
+        shouldDisplay: false,
+        tripId: props.tripId,
+        pinAddModal: false,
+        pinInfoModal: false,
+        lat: EIFFEL_TOWER_POSITION.lat,
+        lon: EIFFEL_TOWER_POSITION.lon,
+        latlngmap: {} //empty hashmap
       }
     }
-    togglePinModal(){
+    get_key(lat, lng){
+      var newLat = lat.toFixed(7);
+      var newLon = lng.toFixed(7);
+      return newLat.toString() + newLon.toString();
+    }
+    add_id(id, lat, lng){
+      var key = this.get_key(lat, lng);
+      this.state.latlngmap[key] = id; //add to hashmap
+    }
+    setActiveLatLng(lat, lng){
       this.setState({
-        modal: true
+        lat: lat,
+        lon: lng
+      });
+    }
+
+    getAllPins() {
+      const db = firebase.firestore();
+      var tripRef = db.collection('trips').doc(this.state.tripId);
+      var pinRef = db.collection('pins');
+      tripRef.get().then((trip) => {
+        var pins = trip.data().pins;
+        for (var i = 0; i < pins.length; i++){
+          //concurrency wooh
+          pinRef.doc(pins[i]).get().then((rec)=>{
+            var p = rec.data();
+            var temp_l = new window.google.maps.LatLng(p.lat, p.lon);
+            this.add_id(rec.id, p.lat, p.lon);
+            this.createMarker(temp_l);
+          });
+        }
+      });
+    }
+
+    togglePinAddModal(){
+      this.setState({
+        shouldDisplay: false,
+        pinAddModal: true,
+        pinInfoModal: false,
+      });
+    }
+    togglePinInfoModal(lat, lon){
+      var key = this.get_key(lat, lon);
+      this.setState({
+        shouldDisplay: true,
+        pid: this.state.latlngmap[key],
+        pinAddModal: false,
+        pinInfoModal: true
       });
     }
     createMarker(latLng){
         //used in the reres function;
-
       var marker = new window.google.maps.Marker({
           position: latLng,
           map: map
       });
+      //add click event listener to the marker
+      var self_reference = this;
+
       marker.addListener('click', function(evt){
-        alert('hahahahahahaha');
+        self_reference.togglePinInfoModal(marker.position.lat(), marker.position.lng()); 
       });
     }
     componentDidMount() {
@@ -53,8 +110,7 @@ export default class MapWrapper extends Component {
       }
       
       initMap() {
-          console.log(window.google);
-          console.log(this.refs);
+
           map = new window.google.maps.Map(this.refs.map, {
             center: EIFFEL_TOWER_POSITION,
             zoom: 16
@@ -84,20 +140,20 @@ export default class MapWrapper extends Component {
             var p = new window.google.maps.Point(e.x, e.y);
             var latlng = point2LatLng(p, map);
             e.dataTransfer.dropEffect = 'copy';
-            self_reference.createMarker(latlng); //jesus christ this is ugly
-            self_reference.togglePinModal();
+            self_reference.setActiveLatLng(latlng.lat(), latlng.lng());
+            self_reference.createMarker(latlng); 
+            self_reference.togglePinAddModal();
             return false;
           });
-
+          this.getAllPins();
       }
       render() {
           return (
               <div ref="map" style={{height: '100%', width: '100%'}}>
-                  <AddPin modal={this.state.modal} ref = "addPin"/>
+                  <AddPin shouldDisplay= {this.state.shouldDisplay} modal={this.state.pinAddModal} add_id = {this.add_id} tripId={this.state.tripId} lat={this.state.lat} lon = {this.state.lon} ref = "addPin"/>
+                  <PinInfo shouldDisplay= {this.state.shouldDisplay}  pid = {this.state.pid} modal={this.state.pinInfoModal} ref = "addPin"/>
                </div>
-
           );
-    
       }
 }
  

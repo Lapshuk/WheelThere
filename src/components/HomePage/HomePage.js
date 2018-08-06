@@ -50,7 +50,7 @@ export default class HomePage extends Component {
       values[1].forEach((doc) => {
         tempRestTrips[doc.data().trip_id] = doc.data();
       })
-
+      
       this.setState({loaded: true, popularTrips: tempPopTrips, restTrips: tempRestTrips});
     })
 
