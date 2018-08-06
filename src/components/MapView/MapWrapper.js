@@ -25,8 +25,10 @@ export default class MapWrapper extends Component {
       this.togglePinAddModal = this.togglePinAddModal.bind(this);
       this.togglePinInfoModal = this.togglePinInfoModal.bind(this);
       this.setActiveLatLng = this.setActiveLatLng.bind(this);
+      this.turnOffModals = this.turnOffModals.bind(this);
       this.add_id = this.add_id.bind(this);
       this.state={
+        getAllPins: props.getAllPins,
         ref: props.mapRef,
         pid: '',
         shouldDisplay: false,
@@ -37,6 +39,13 @@ export default class MapWrapper extends Component {
         lon: EIFFEL_TOWER_POSITION.lon,
         latlngmap: {} //empty hashmap
       }
+    }
+    turnOffModals(){
+      this.setState({
+        shouldDisplay: false,
+        pinAddModal: false,
+        pinInfoModal: false,
+      });
     }
     get_key(lat, lng){
       var newLat = lat.toFixed(7);
@@ -82,6 +91,7 @@ export default class MapWrapper extends Component {
         pinInfoModal: false,
       });
     }
+
     togglePinInfoModal(lat, lon){
       var key = this.get_key(lat, lon);
       this.setState({
@@ -154,8 +164,8 @@ export default class MapWrapper extends Component {
       render() {
           return (
               <div ref="map" style={{height: '100%', width: '100%'}}>
-                  <AddPin shouldDisplay= {this.state.shouldDisplay} modal={this.state.pinAddModal} add_id = {this.add_id} tripId={this.state.tripId} lat={this.state.lat} lon = {this.state.lon} ref = "addPin"/>
-                  <PinInfo ref = 'pinInfoModal' id = 'pinInfoModal' shouldDisplay= {this.state.shouldDisplay}  pid = {this.state.pid} modal={this.state.pinInfoModal} ref = "addPin"/>
+                  <AddPin turnOffModals = {this.turnOffModals} getAllPins = {this.state.getAllPins} shouldDisplay= {this.state.shouldDisplay} modal={this.state.pinAddModal} add_id = {this.add_id} tripId={this.state.tripId} lat={this.state.lat} lon = {this.state.lon} ref = "addPin"/>
+                  <PinInfo shouldDisplay= {this.state.shouldDisplay}  pid = {this.state.pid} modal={this.state.pinInfoModal} ref = "addPin"/>
                </div>
           );
       }
