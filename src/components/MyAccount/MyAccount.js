@@ -77,22 +77,21 @@ export default class MyAccount extends Component {
                 {/*}*/}
             {/*</AuthUserContext.Consumer>*/}
 
-            <AuthUserContext.Consumer>
-                {authUser => (authUser && authUser.uid === this.userId)
-                    ? <Button className="field"
-                              onClick={this.toggleMapModal}>
-                        edit profile</Button>
-                    : <a></a>
-                }
-            </AuthUserContext.Consumer>
-
             <h3>{this.state.first_name} {this.state.last_name}</h3>
 
-            <p>{this.state.my_trips.length} Maps</p>
+              <AuthUserContext.Consumer>
+                  {authUser => (authUser && authUser.uid === this.state.userId)
+                      ? <Button className="field"
+                                onClick={this.toggleMapModal}>
+                          edit profile</Button>
+                      : <a></a>
+                  }
+              </AuthUserContext.Consumer>
+            {/*<p>{this.state.my_trips.length} Maps</p>*/}
             <p>{this.state.about}</p>
 
-            <MyTrips userId={this.state.userId}/>
-            {this.loadSavedTrips()}
+            {/*<MyTrips userId={this.state.userId}/>*/}
+            {/*{this.loadSavedTrips()}*/}
           </div>
           /*Map Objects Here*/
         </div>
