@@ -3,6 +3,7 @@ import {ReactDOM} from 'react';
 import AddPin from '../../utils/AddPin/AddPin';
 import PinInfo from '../../utils/PinInfo/PinInfo';
 import $ from 'jquery';
+import * as firebase from "firebase";
 
 //asynchronous loading magic
 function loadJS(src) {
@@ -24,14 +25,20 @@ export default class MapWrapper extends Component {
       this.togglePinAddModal = this.togglePinAddModal.bind(this);
       this.togglePinInfoModal = this.togglePinInfoModal.bind(this);
       this.setActiveLatLng = this.setActiveLatLng.bind(this);
-
+      this.add_id = this.add_id.bind(this);
       this.state={
+        pid: '',
         tripId: props.tripId,
         pinAddModal: false,
         pinInfoModal: false,
         lat: EIFFEL_TOWER_POSITION.lat,
         lon: EIFFEL_TOWER_POSITION.lon,
+        latlngmap: {} //empty hashmap
       }
+    }
+    add_id(id, lat, lng){
+      var key = lat.toString() + lng.toString();
+      this.state.latlngmap[key] = id; //add to hashmap
     }
     setActiveLatLng(lat, lng){
       this.setState({
@@ -39,14 +46,35 @@ export default class MapWrapper extends Component {
         lon: lng
       });
     }
+
+    getAllPins() {
+      const db = firebase.firestore();
+      var tripRef = db.collection('trips').doc(this.state.tripId);
+      var pinRef = db.collection('pins');
+      tripRef.get().then((trip) => {
+        var pins = trip.data().pins;
+        for(var pin in pins){
+          pinRef.doc(pins[pin]).get().then((rec)=>{
+            var p = rec.data();
+            var temp_l = new window.google.maps.LatLng(p.lat, p.lon);
+            this.add_id(pins[pin], p.lat, p.lon);
+            this.createMarker(temp_l);
+          });
+        }
+      })
+    }
+
     togglePinAddModal(){
       this.setState({
         pinAddModal: true,
         pinInfoModal: false
       });
     }
-    togglePinInfoModal(){
+    togglePinInfoModal(lat, lon){
+      var key = lat.toString() + lon.toString();
+
       this.setState({
+        pid: this.state.latlngmap[key],
         pinAddModal: false,
         pinInfoModal: true
       });
@@ -59,10 +87,10 @@ export default class MapWrapper extends Component {
       });
       //add click event listener to the marker
       var self_reference = this;
-      marker.addListener('click', function(evt){
-        self_reference.togglePinInfoModal(); 
-      });
 
+      marker.addListener('click', function(evt){
+        self_reference.togglePinInfoModal(marker.position.lat(), marker.position.lng()); 
+      });
     }
     componentDidMount() {
           // Connect the initMap() function within this class to the global window context,
@@ -74,6 +102,7 @@ export default class MapWrapper extends Component {
       }
       
       initMap() {
+
           map = new window.google.maps.Map(this.refs.map, {
             center: EIFFEL_TOWER_POSITION,
             zoom: 16
@@ -108,13 +137,13 @@ export default class MapWrapper extends Component {
             self_reference.togglePinAddModal();
             return false;
           });
-
+          this.getAllPins();
       }
       render() {
           return (
               <div ref="map" style={{height: '100%', width: '100%'}}>
-                  <AddPin modal={this.state.pinAddModal} tripId={this.state.tripId} lat={this.state.lat} lon = {this.state.lon} ref = "addPin"/>
-                  <PinInfo modal={this.state.pinInfoModal} ref = "addPin"/>
+                  <AddPin modal={this.state.pinAddModal} add_id = {this.add_id} tripId={this.state.tripId} lat={this.state.lat} lon = {this.state.lon} ref = "addPin"/>
+                  <PinInfo pid = {this.state.pid} modal={this.state.pinInfoModal} ref = "addPin"/>
                </div>
           );
       }

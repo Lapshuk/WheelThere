@@ -12,6 +12,7 @@ export default class AddPin extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      add_id: props.add_id,
       modal: false,
       description: '',
       address: '',
@@ -97,6 +98,7 @@ export default class AddPin extends Component {
     //this should be bound
     var self_ref = this;
     //get public link for image
+    this.state.add_id('hello', 1, 2);
     storageRef.child(imgPath).getDownloadURL().then(function (url) {
       self_ref.setState({img_url: url});
       //push pin to firestore
@@ -113,6 +115,7 @@ export default class AddPin extends Component {
         image: self_ref.state.img_url
       }).then(function (docRef) {
         //gets the ID of newly created doc
+
         //add the pin id to the trip
         const db = firebase.firestore();
         var tripRef = db.collection('trips').doc(self_ref.state.tripId);
@@ -136,7 +139,6 @@ export default class AddPin extends Component {
     const settings = {timestampsInSnapshots: true};
     db.settings(settings);
     var pin_ref = db.collection('pins');
-
 
     //referencing the trip to update pins list
     // var trip_ref = db.collection('trips');
@@ -162,7 +164,6 @@ export default class AddPin extends Component {
     });
   }
   componentWillReceiveProps(newProps) {
-    console.log(newProps);
     //safely update states
     if(newProps.modal){
       this.setState({
