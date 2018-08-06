@@ -6,7 +6,8 @@ import {
   Nav,
   NavItem,
   NavLink
-  } from 'reactstrap';
+} from 'reactstrap';
+import "../NavHeader/NavHeader.css";
 
 import { Input } from 'reactstrap';
 import { FaBeer, FaAccessibleIcon, FaGooglePlusSquare} from 'react-icons/fa';
@@ -39,19 +40,19 @@ export default class NavHeader extends Component{
 					</NavbarBrand>
 				    <Nav navbar>
 			          	  <NavItem>
-		         			 <Input className="searchBar" type="search" name="searc" id="searchBar" placeholder="search" />
+		         			 		<Input className="searchBar" type="search" name="searc" id="searchBar" placeholder="search" />
 			              </NavItem>
 			              <NavItem>
 			                <NavLink onClick = {this.toggleMapModal}>Add map</NavLink>
 			              </NavItem>
 			              <NavItem>
-			                <NavLink >Messages</NavLink>
+			                <NavLink className="nav-link">Messages</NavLink>
 			              </NavItem>
 
 										<AuthUserContext.Consumer>
 												{authUser => authUser
 														? <NavItem>
-																<NavLink href={"/myaccount/" + authUser.uid}>Account</NavLink>
+																<NavLink className="nav-link" href={"/myaccount/" + authUser.uid}>Account</NavLink>
                             </NavItem>
 														: <NavItem></NavItem>
 												}
@@ -61,10 +62,10 @@ export default class NavHeader extends Component{
 										<AuthUserContext.Consumer>
 											{authUser => authUser
 												? <NavItem>
-															<NavLink>Welcome {authUser.firstName}!</NavLink>
+															<NavLink>Welcome {authUser.email}!</NavLink>
 													</NavItem>
 												: <NavItem>
-                              <NavLink href={"/login/"}>Log In</NavLink>
+                              <NavLink className="nav-link" href={"/login/"}>Log In</NavLink>
 													</NavItem>
 												}
 										</AuthUserContext.Consumer>
@@ -73,11 +74,11 @@ export default class NavHeader extends Component{
 												{authUser => authUser
 														? <div>
                                 <NavItem>
-																		<NavLink onClick={() => firebase.auth().signOut()}>Sign Out</NavLink>
+																		<NavLink className="nav-link" onClick={() => firebase.auth().signOut()}>Sign Out</NavLink>
                                 </NavItem>
                               </div>
 														: <NavItem>
-                                <NavLink href={"/signup/"}>Sign Up</NavLink>
+                                <NavLink className="nav-link" href={"/signup/"}>Sign Up</NavLink>
 															</NavItem>
 												}
 										</AuthUserContext.Consumer>
