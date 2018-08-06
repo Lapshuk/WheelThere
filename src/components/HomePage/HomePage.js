@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, Row, Collapse} from 'reactstrap';
+import {Container, Row, Collapse, Col} from 'reactstrap';
 import '../../App.css';
 import ImageBox from "../../utils/ImageBox/ImageBox";
 import NavHeader from '../../utils/NavHeader/NavHeader';
@@ -12,18 +12,11 @@ export default class HomePage extends Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
-    this.getTrips = this.getTrips.bind(this);
     this.state = {
       collapse: false,
-      targetId: null,
-      loaded: false,
-      popularTrips: null,
-      restTrips: null
+      targetId: null
     };
-
-    this.category = {'popular': 1, 'rest': 2};
   }
-
 
   toggle(e) {
     let target = e.target.parentElement.parentElement.attributes["data-id"].value;
@@ -76,44 +69,64 @@ export default class HomePage extends Component {
 
   render() {
 
-    let container = null;
-    if (!this.state.loaded) {
-      container = <Container><img src={require('../../imgs/loader.svg')} alt=''/></Container>
-    } else {
-
-      let collapsePop = !this.state.popularTrips[this.state.targetId] ? "" :
-          <Collapse className='map-collapse' isOpen={this.state.collapse}>
-            <Row className='map-collapse-content shadow'>
-              <div>{this.state.targetId ? this.getTrips(this.category.popular)[this.state.targetId].name : ""}</div>
-            </Row>
-          </Collapse>;
-      let collapseRes = !this.state.restTrips[this.state.targetId] ? "" :
-          <Collapse className='map-collapse' isOpen={this.state.collapse}>
-            <Row className='map-collapse-content shadow'>
-              <div>{this.state.targetId ? this.getTrips(this.category.rest)[this.state.targetId].name : ""}</div>
-            </Row>
-          </Collapse>;
-
-      container = <Container fluid={true}>
-        <div className='category-title'> most popular</div>
-        <div className='category horizontal-scroll' onClick={(e) => this.toggle(e)} style={{marginBottom: '1rem'}}>
-          <ImageBox trips={this.getTrips(this.category.popular)}/>
-        </div>
-        {collapsePop}
-        <div className='category-title'> local - San Francisco</div>
-        <div className='category horizontal-scroll' onClick={(e) => this.toggle(e)} style={{marginBottom: '1rem'}}>
-          <ImageBox trips={this.getTrips(this.category.rest)}/>
-        </div>
-        {collapseRes}
-      </Container>
-
-    }
-
+    const trips =  {
+      1: {
+        'image' : 'https://i.imgur.com/fszDZJi.jpg',
+        'name' : 'Machu Pichu',
+        'pins' : []
+      },
+      2: {
+        'image' : 'https://i.imgur.com/fszDZJi.jpg',
+        'name' : 'The Great Whistler',
+        'pins' : []
+      },
+      3: {
+        'image' : 'https://i.imgur.com/fszDZJi.jpg',
+        'name' : 'Gimme Italy',
+        'pins' : []
+      },
+      4: {
+        'image' : 'https://i.imgur.com/fszDZJi.jpg',
+        'name' : 'YellowStone',
+        'pins' : []
+      },
+      5: {
+        'image' : 'https://i.imgur.com/fszDZJi.jpg',
+        'name' : 'YellowStone',
+        'pins' : []
+      },
+    };
+      // {authUser => authUser
+      //     ? <p> {authUser.email} </p>
+      //     : null
+      // }
     return (
-        <div id='HomePage'>
-          <NavHeader/>
-          {container}
-        </div>
+      <div id='HomePage'>
+      <NavHeader/>
+
+        <Container fluid={true}>
+          <div className='category-title'> most popular </div>
+          <div className='category horizontal-scroll' onClick={ (e) => this.toggle(e)} style={{ marginBottom: '1rem' }}>
+            <ImageBox trips={trips}/>
+          </div>
+          <Collapse className='map-collapse' isOpen={this.state.collapse}>
+            <Row className='map-collapse-content shadow'>
+              <div>{this.state.targetId ? trips[this.state.targetId].name : ""}</div>
+            </Row>
+          </Collapse>
+
+          <div className='category-title'> local - San Francisco </div>
+          <div className='category horizontal-scroll'>
+            <ImageBox trips={trips}/>
+          </div>
+
+          <div className='category-title'> Some Other Category </div>
+          <div className='category horizontal-scroll'>
+            <ImageBox trips={trips} />
+          </div>
+
+        </Container>
+      </div>
     );
   }
 }

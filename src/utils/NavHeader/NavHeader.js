@@ -12,6 +12,10 @@ import { Input } from 'reactstrap';
 import { FaBeer, FaAccessibleIcon, FaGooglePlusSquare} from 'react-icons/fa';
 
 import $ from 'jquery';
+import LoginButton from "../../components/auth/LoginButton";
+import SignUpButton from "../../components/auth/SignUpButton";
+import AuthUserContext from '../../components/auth/AuthUserContext';
+import SignOutButton from "../../components/auth/SignOutButton";
 
 export default class NavHeader extends Component{
 	constructor(){
@@ -48,6 +52,27 @@ export default class NavHeader extends Component{
 			              <NavItem>
 			                <NavLink >Account</NavLink>
 			              </NavItem>
+
+										<AuthUserContext.Consumer>
+											{authUser => authUser
+												? <NavItem>
+															<NavLink>Welcome {authUser.email}!</NavLink>
+													</NavItem>
+												: <NavItem>
+															<LoginButton/>
+													</NavItem>
+												}
+										</AuthUserContext.Consumer>
+
+										<AuthUserContext.Consumer>
+												{authUser => authUser
+														? <SignOutButton />
+														: <NavItem>
+																<SignUpButton/>
+															</NavItem>
+												}
+										</AuthUserContext.Consumer>
+
 			              <AddMap modal={this.state.modal} ref = "addMap"/>
 			         </Nav>
 	              </Navbar>
