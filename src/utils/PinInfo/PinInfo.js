@@ -49,6 +49,8 @@ export default class PinInfo extends React.Component {
   render() {
     return (
       <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+        <ModalHeader toggle={this.toggle}>Location info</ModalHeader>
+
         <ModalBody>
           <Row>
             <Col>
