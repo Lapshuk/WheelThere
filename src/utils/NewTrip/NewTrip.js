@@ -20,11 +20,13 @@ export default class NewTrip extends Component {
       image: null,
       image_file: null,
       stars: 0,
-      ownerId: props.userId
+      ownerId: props.userId,
+      finished_1: false,
+      finished_2: false
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleFileChange = this.handleFileChange.bind(this);
-    this.submitAndRedirect = this.submitAndRedirect.bind(this);
+    this.checkFinished = this.checkFinished.bind(this);
   };
 
   handleFileChange = (event) => {
@@ -51,7 +53,6 @@ export default class NewTrip extends Component {
         this.setImageInTripDb(tripId);
       });
     });
-
   };
 
   //set the image url for the trip in DB
@@ -60,11 +61,16 @@ export default class NewTrip extends Component {
     var tripRef = db.collection('trips').doc(tripId);
     tripRef.update({
       image: this.state.image
+    }).then(() => {
+      this.setState({
+        finished_1: true
+      });
+      this.checkFinished();
     });
   };
 
   //post trip to the storage
-  postTrip = (event, callback) => {
+  postTrip = (event) => {
     event.preventDefault();
     event.stopPropagation();
     //referencing trips database
@@ -76,7 +82,7 @@ export default class NewTrip extends Component {
       owner_id: this.state.ownerId,
       pins: [],
       stars: this.state.stars,
-      image : null
+      image: null
     }).then(function (trip) {
       //setting tripId and call back function is to push image to cloud
       _this.postImageToCloud(trip.id, _this.state.image_file);
@@ -95,24 +101,26 @@ export default class NewTrip extends Component {
         userRef.update({
           my_trips: tripsList
         }).then(() => {
-          if(typeof callback == 'function') {
-            callback();
-          };
+          _this.setState({
+            finished_2: true
+          });
+          this.checkFinished();
         });
       });
     });
 
   };
 
-  submitAndRedirect = (event)=>{
-    this.postTrip(event,() => {
-      window.location.assign('/mapview/'+this.state.ownerId);
-    });
+  checkFinished = () => {
+    if (this.state.finished_1 && this.state.finished_2) {
+      window.location.assign('/mapview/' + this.state.ownerId);
+    }
   };
+
 
   render() {
     return (
-        <Form onSubmit={this.submitAndRedirect}>
+        <Form onSubmit={this.postTrip}>
           <FormGroup>
             <Label for="tripName">Trip Name</Label>
             <Input type="name" name="name" id="tripName" onChange={this.handleNameChange}/>
