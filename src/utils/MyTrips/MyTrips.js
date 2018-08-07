@@ -67,8 +67,7 @@ export default class MyTrips extends Component {
     // }
     return (
         <div id='HomePage'>
-          <NavHeader/>
-          {/*{container}*/}
+          My Trips
         </div>
     );
   }
