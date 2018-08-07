@@ -13,6 +13,7 @@ export default class HomePage extends Component {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.getTrips = this.getTrips.bind(this);
+    this.getCollapsable  = this.getCollapsable.bind(this);
     this.state = {
       collapse: false,
       targetId: null,
@@ -60,7 +61,6 @@ export default class HomePage extends Component {
 
     let trips = [];
     switch (category) {
-
       case 1:
         trips = this.state.popularTrips;
         break;
@@ -68,11 +68,16 @@ export default class HomePage extends Component {
         trips = this.state.restTrips;
         break;
     }
-
     return trips;
-
   }
 
+  getCollapsable(category) {
+    return <Collapse className='map-collapse' isOpen={this.state.collapse}>
+            <Row className='map-collapse-content shadow'>
+              <div>{this.state.targetId ? category[this.state.targetId].name : ""}</div>
+            </Row>
+          </Collapse>;
+  }
 
   render() {
 
@@ -82,17 +87,9 @@ export default class HomePage extends Component {
     } else {
 
       let collapsePop = !this.state.popularTrips[this.state.targetId] ? "" :
-          <Collapse className='map-collapse' isOpen={this.state.collapse}>
-            <Row className='map-collapse-content shadow'>
-              <div>{this.state.targetId ? this.getTrips(this.category.popular)[this.state.targetId].name : ""}</div>
-            </Row>
-          </Collapse>;
+        this.getCollapsable(this.getTrips(this.category.popular));
       let collapseRes = !this.state.restTrips[this.state.targetId] ? "" :
-          <Collapse className='map-collapse' isOpen={this.state.collapse}>
-            <Row className='map-collapse-content shadow'>
-              <div>{this.state.targetId ? this.getTrips(this.category.rest)[this.state.targetId].name : ""}</div>
-            </Row>
-          </Collapse>;
+        this.getCollapsable(this.getTrips(this.category.rest));
 
       container = <Container fluid={true}>
         <div className='category-title'> most popular</div>
