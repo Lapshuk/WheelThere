@@ -125,6 +125,9 @@ export default class AddPin extends Component {
         tripRef.get().then(function (trip) {
           //getting current list of pins and pushing newly created pin
           pins = trip.data().pins;
+          if (pins == undefined){
+            pins = [];
+          }
           pins.push(pinId);
           self_ref.state.add_id(pinId, self_ref.state.lat, self_ref.state.lon);
           //TODO might not need to force to run next line right after the previous function done. Works for now

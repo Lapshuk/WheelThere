@@ -34,7 +34,7 @@ export default class PinInfo extends React.Component {
         transport: pind.transport,
         tip: pind.tip,
         fun: pind.fun,
-        modal: modal,
+        modal: modal, //if the modal should be on or not
         pid: pid,
       });
     });
@@ -47,7 +47,6 @@ export default class PinInfo extends React.Component {
     }
   }
   render() {
-
     return (
       <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
         <ModalBody>

@@ -7,7 +7,6 @@ import {
   NavItem,
   NavLink
 } from 'reactstrap';
-import "../NavHeader/NavHeader.css";
 
 import {Input} from 'reactstrap';
 import {FaBeer, FaAccessibleIcon, FaGooglePlusSquare} from 'react-icons/fa';
@@ -89,7 +88,8 @@ export default class NavHeader extends Component {
                   {authUser => authUser
                       ? <div>
                         <NavItem>
-                          <NavLink onClick={() => firebase.auth().signOut().then(window.location.assign('/'))}>Sign Out</NavLink>
+                          <NavLink onClick={() => firebase.auth().signOut()}>Sign Out</NavLink>
+                          <AddMap modal={this.state.modal} userId={authUser.uid}/>
                         </NavItem>
                       </div>
                       : <NavItem>
@@ -98,7 +98,7 @@ export default class NavHeader extends Component {
                   }
                 </AuthUserContext.Consumer>
 
-                <AddMap modal={this.state.modal} ref="addMap"/>
+
               </Nav>
             </Navbar>
           </div>

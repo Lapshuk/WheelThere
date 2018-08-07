@@ -44,11 +44,11 @@ export default class HomePage extends Component {
 
     Promise.all([popPromise, restPromise]).then((values) => {
       values[0].forEach((doc) => {
-        tempPopTrips[doc.data().trip_id] = doc.data();
+        tempPopTrips[doc.id] = doc.data();
       })
 
       values[1].forEach((doc) => {
-        tempRestTrips[doc.data().trip_id] = doc.data();
+        tempRestTrips[doc.id] = doc.data();
       })
       
       this.setState({loaded: true, popularTrips: tempPopTrips, restTrips: tempRestTrips});

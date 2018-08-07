@@ -6,11 +6,10 @@ import MyAccount from "./components/MyAccount/MyAccount.js"
 import TripDetails from "./components/TripDetails/TripDetails.js"
 import LoginForm from "./components/auth/Login.js"
 import SignUpForm from "./components/auth/SignUp.js"
+
 import withAuthentication from './components/auth/WithAuthentication.js';
 import Submit from "./components/MapView/Submit.js"
-import NewTrip from "./components/NewTrip/NewTrip.js"
-import EditProfile from "./utils/EditProfile/EditProfile.js"
-// import AuthUserContext from './components/auth/AuthUserContext';
+import NewTrip from "./utils/NewTrip/NewTrip.js"
 
 import {BrowserRouter} from 'react-router-dom'
 import {Route} from 'react-router-dom';
@@ -51,13 +50,6 @@ class App extends Component {
             <Route path="/login/" component={LoginForm} />
             <Route path="/signup/" component={SignUpForm} />
             <Route path="/submitpin/:tripId" component={Submit}/>
-              {/*<AuthUserContext.Consumer>*/}
-                  {/*{authUser => (authUser && authUser.uid === this.userId)*/}
-                      {/*? <Route path="/editprofile/:userId" component={EditProfile}/>*/}
-                      {/*: <Route path="/" component={Home}/>*/}
-                  {/*}*/}
-              {/*</AuthUserContext.Consumer>*/}
-            <Route path="/editprofile/:userId" component={EditProfile}/>
           </div>
         </BrowserRouter>
     );
