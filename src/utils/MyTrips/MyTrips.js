@@ -44,12 +44,7 @@ export default class MyTrips extends Component {
     //           <div>{this.state.targetId ? this.getTrips(this.category.popular)[this.state.targetId].name : ""}</div>
     //         </Row>
     //       </Collapse>;
-    //   let collapseRes = !this.state.restTrips[this.state.targetId] ? "" :
-    //       <Collapse className='map-collapse' isOpen={this.state.collapse}>
-    //         <Row className='map-collapse-content shadow'>
-    //           <div>{this.state.targetId ? this.getTrips(this.category.rest)[this.state.targetId].name : ""}</div>
-    //         </Row>
-    //       </Collapse>;
+    //
     //
     //   container = <Container fluid={true}>
     //     <div className='category-title'> most popular</div>

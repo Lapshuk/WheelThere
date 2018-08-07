@@ -40,8 +40,8 @@ export default class HomePage extends Component {
   componentDidMount() {
 
     const db = firebase.firestore();
-    let popQuery = db.collection('trips').where('stars', '==', 5);
-    let restQuery = db.collection('trips').where('stars', '<', 5);
+    let popQuery = db.collection('trips').where('stars', '>=', 4.5);
+    let restQuery = db.collection('trips').where('stars', '<', 4.5);
     this.pinRef = db.collection('pins');
 
     let tempPopTrips = {};
@@ -79,17 +79,19 @@ export default class HomePage extends Component {
   }
 
   getAllPins(category, tripId) {
+        let trip = firebase.firestore().collection('trips').doc(tripId);
         let pins = this.getTrips(category)[tripId].pins;
         let rate = 0;
         for (let i = 0; i < pins.length; i++){
           this.pinRef.doc(pins[i]).get().then((rec)=>{
             let p = rec.data();
-            let avgRate = (parseInt(p.transport)+ parseInt(p.fun) + parseInt(p.rollability) + parseInt(p.bathroom)) / 4;
-            rate += avgRate;
-            this.state.pins[rec.id] = {description: p.description, rate: avgRate, image: p.image};
+
+            this.state.pins[rec.id] = {description: p.description, image: p.image};
             if (pins.length === Object.keys(this.state.pins).length){
-              rate /= pins.length;
-              this.setState({targetIdRate: true, targetRate: rate});
+              trip.get().then(data =>{
+                this.setState({targetIdRate: true, targetRate: data.data().stars});
+              });
+
             }
           });
         }

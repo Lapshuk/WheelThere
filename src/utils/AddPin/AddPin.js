@@ -27,8 +27,11 @@ export default class AddPin extends Component {
       tip: '',
       image: null,
       img_url: '',
-      tripId: props.tripId
+      tripId: props.tripId,
+      pins : {}
     };
+    this.pinRef = firebase.firestore().collection('pins');
+
     this.toggle = this.toggle.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleAddressChange = this.handleAddressChange.bind(this);
@@ -44,6 +47,7 @@ export default class AddPin extends Component {
     this.handleFileChange = this.handleFileChange.bind(this);
     this.pushPinToStorage = this.pushPinToStorage.bind(this);
     this.updatePinsList = this.updatePinsList.bind(this);
+    this.updateTripRating = this.updateTripRating.bind(this);
 
   }
 
@@ -91,8 +95,30 @@ export default class AddPin extends Component {
     //updating trip in db
     tripRef.update({
       "pins": pins
+    }).then(() => {
+      this.updateTripRating(tripRef, pins);
     });
   }
+
+  updateTripRating = (tripRef, pins) => {
+    let rate = 0;
+    if (pins != null) {
+      for (let i = 0; i < pins.length; i++) {
+        this.pinRef.doc(pins[i]).get().then((rec) => {
+          let p = rec.data();
+          let avgRate = (parseInt(p.transport) + parseInt(p.fun) + parseInt(p.rollability) + parseInt(p.bathroom)) / 4;
+          rate += avgRate;
+          this.state.pins[rec.id] = {rate: avgRate};
+          if (pins.length === Object.keys(this.state.pins).length) {
+            rate /= pins.length;
+            tripRef.update({
+              stars: rate
+            });
+          }
+        });
+      }
+    }
+  };
 
   pushPinToStorage(imgPath, pin_ref, pinId) {
     
@@ -131,7 +157,6 @@ export default class AddPin extends Component {
           }
           pins.push(pinId);
           self_ref.state.add_id(pinId, self_ref.state.lat, self_ref.state.lon);
-          //TODO might not need to force to run next line right after the previous function done. Works for now
           self_ref.updatePinsList(tripRef, pins);
           self_ref.toggle();
           self_ref.state.turnOffModals();
