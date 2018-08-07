@@ -89,6 +89,7 @@ export default class NavHeader extends Component {
                       ? <div>
                         <NavItem>
                           <NavLink onClick={() => firebase.auth().signOut()}>Sign Out</NavLink>
+                          <AddMap modal={this.state.modal} userId={authUser.uid}/>
                         </NavItem>
                       </div>
                       : <NavItem>
@@ -97,7 +98,7 @@ export default class NavHeader extends Component {
                   }
                 </AuthUserContext.Consumer>
 
-                <AddMap modal={this.state.modal} ref="addMap"/>
+
               </Nav>
             </Navbar>
           </div>
