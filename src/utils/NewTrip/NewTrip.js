@@ -113,7 +113,7 @@ export default class NewTrip extends Component {
 
   checkFinished = () => {
     if (this.state.finished_1 && this.state.finished_2) {
-      window.location.assign('/mapview/' + this.state.ownerId);
+      window.location.assign('/mapview/' + this.state.tripId);
     }
   };
 
