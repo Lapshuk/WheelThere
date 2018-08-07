@@ -83,6 +83,7 @@ export default class MapView extends Component {
               </div>
             </Col>
             <Col id="mapwrapper" xs="10" style={{width: '100vw', height: '100vh'}}>
+              <input type="text" className="text-center map-query-control form-control" id="place-input" placeholder="Search for a place!" autoComplete="on" />
               <MapWrapper getAllPins = {this.getAllPins} viewRef = {this.state.viewRef} ref = {this.state.mapRef} tripId = {this.state.tripId} />
             </Col>
           </Row>
