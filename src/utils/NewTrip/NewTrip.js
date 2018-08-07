@@ -104,7 +104,7 @@ export default class NewTrip extends Component {
           _this.setState({
             finished_2: true
           });
-          this.checkFinished();
+          _this.checkFinished();
         });
       });
     });
