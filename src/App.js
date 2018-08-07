@@ -9,7 +9,7 @@ import SignUpForm from "./components/auth/SignUp.js"
 
 import withAuthentication from './components/auth/WithAuthentication.js';
 import Submit from "./components/MapView/Submit.js"
-import NewTrip from "./components/NewTrip/NewTrip.js"
+import NewTrip from "./utils/NewTrip/NewTrip.js"
 
 import {BrowserRouter} from 'react-router-dom'
 import {Route} from 'react-router-dom';
