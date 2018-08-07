@@ -19,7 +19,13 @@ body {
   width: 300px; /* Need a specific value to work */
 }
 .maps-container{
-
+  left: 2%;
+  max-height: 75vh;
+  overflow: scroll;
+  padding: 10px;
+}
+#left-column{
+  padding: 0px;
 }
 .drag-container{
   position: absolute; 

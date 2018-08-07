@@ -27,6 +27,7 @@ export default class MapWrapper extends Component {
       this.setActiveLatLng = this.setActiveLatLng.bind(this);
       this.add_id = this.add_id.bind(this);
       this.state={
+        ref: props.mapRef,
         pid: '',
         shouldDisplay: false,
         tripId: props.tripId,
@@ -59,15 +60,18 @@ export default class MapWrapper extends Component {
       var pinRef = db.collection('pins');
       tripRef.get().then((trip) => {
         var pins = trip.data().pins;
-        for (var i = 0; i < pins.length; i++){
-          //concurrency wooh
-          pinRef.doc(pins[i]).get().then((rec)=>{
-            var p = rec.data();
-            var temp_l = new window.google.maps.LatLng(p.lat, p.lon);
-            this.add_id(rec.id, p.lat, p.lon);
-            this.createMarker(temp_l);
-          });
+        if (pins != undefined){
+          for (var i = 0; i < pins.length; i++){
+            //concurrency wooh
+            pinRef.doc(pins[i]).get().then((rec)=>{
+              var p = rec.data();
+              var temp_l = new window.google.maps.LatLng(p.lat, p.lon);
+              this.add_id(rec.id, p.lat, p.lon);
+              this.createMarker(temp_l);
+            });
+          }
         }
+
       });
     }
 
@@ -151,7 +155,7 @@ export default class MapWrapper extends Component {
           return (
               <div ref="map" style={{height: '100%', width: '100%'}}>
                   <AddPin shouldDisplay= {this.state.shouldDisplay} modal={this.state.pinAddModal} add_id = {this.add_id} tripId={this.state.tripId} lat={this.state.lat} lon = {this.state.lon} ref = "addPin"/>
-                  <PinInfo shouldDisplay= {this.state.shouldDisplay}  pid = {this.state.pid} modal={this.state.pinInfoModal} ref = "addPin"/>
+                  <PinInfo ref = 'pinInfoModal' id = 'pinInfoModal' shouldDisplay= {this.state.shouldDisplay}  pid = {this.state.pid} modal={this.state.pinInfoModal} ref = "addPin"/>
                </div>
           );
       }
