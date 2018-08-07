@@ -12,6 +12,8 @@ export default class AddPin extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      turnOffModals: props.turnOffModals,
+      getAllPins: props.getAllPins,
       add_id: props.add_id,
       modal: false,
       description: '',
@@ -27,7 +29,6 @@ export default class AddPin extends Component {
       img_url: '',
       tripId: props.tripId
     };
-
     this.toggle = this.toggle.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleAddressChange = this.handleAddressChange.bind(this);
@@ -133,6 +134,8 @@ export default class AddPin extends Component {
           //TODO might not need to force to run next line right after the previous function done. Works for now
           self_ref.updatePinsList(tripRef, pins);
           self_ref.toggle();
+          self_ref.state.turnOffModals();
+          self_ref.state.getAllPins();
         });
       });
     });
@@ -142,6 +145,7 @@ export default class AddPin extends Component {
   postPin(event) {
     event.preventDefault();
     event.stopPropagation();
+
     //referencing pins database
     const db = firebase.firestore();
     const settings = {timestampsInSnapshots: true};
@@ -169,6 +173,11 @@ export default class AddPin extends Component {
   toggle() {
     this.setState({
       modal: !this.state.modal
+    });
+  }
+  turnOff(){
+    this.setState({
+      modal: false
     });
   }
   componentWillReceiveProps(newProps) {

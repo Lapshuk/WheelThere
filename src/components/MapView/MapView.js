@@ -14,6 +14,7 @@ export default class MapView extends Component {
       tripId: props.match.params.tripId,
       pin_ids: {},
       mapRef: React.createRef(),
+      viewRef: React.createRef(),
     }
     this.getAllPins= this.getAllPins.bind(this);
     this.showPins = this.showPins.bind(this);
@@ -43,26 +44,24 @@ export default class MapView extends Component {
     });
   }
   componentDidMount(){
-    this.getAllPins();
+    //setInterval(this.getAllPins, 3000);
   }
   showPins(){
     if (this.state.loaded){
       {
       var x = [];
       Object.keys(this.state.pin_ids).map((key) => {
-        console.log(key);
-
         var image = this.state.pin_ids[key].image;
         var description = this.state.pin_ids[key].description;
         var lat = this.state.pin_ids[key].lat;
         var lon = this.state.pin_ids[key].lon;
-          x.push(<PinDisplay lat={lat} lon={lon} mapRef = {this.state.mapRef} id = {'pin' + key} image = {image} title = {description}/>);
+          x.push(<PinDisplay key = {lat.toString() + lon.toString()} lat={lat} lon={lon} mapRef = {this.state.mapRef} id = {'pin' + key} image = {image} title = {description}/>);
         });
         return x;
       }
     }
     else{
-
+      this.getAllPins();
     }
   }
   render() {
@@ -84,16 +83,20 @@ export default class MapView extends Component {
               </div>
             </Col>
             <Col id="mapwrapper" xs="10" style={{width: '100vw', height: '100vh'}}>
-              <MapWrapper ref = {this.state.mapRef} tripId = {this.state.tripId} />
+              <input type="text" className="text-center map-query-control form-control" id="place-input" placeholder="Search for a place!" autoComplete="on" />
+              <MapWrapper getAllPins = {this.getAllPins} viewRef = {this.state.viewRef} ref = {this.state.mapRef} tripId = {this.state.tripId} />
             </Col>
           </Row>
-          <div className="sticky-right">
+        </div>
+    );
+    //Bottom right when we need i
+    /*
+
+              <div className="sticky-right">
             <a href="/"><img style={{width: '70px', height: '70px'}}
                              src="http://www.free-icons-download.net/images/plus-icon-27951.png"/></a>
             <br/>
             Testing the bottom right
-          </div>
-        </div>
-    );
+            </div> */
   }
 }

@@ -23,7 +23,7 @@ export default class PinDisplay extends Component{
 	render(){
 		
 		return (
-			<div> 
+			<div className = "display-box"> 
 				<div> {this.state.title} </div>
 				<a href = '/' onClick = {this.showModal}> <img onClick = {this.showModal} style={{width: '100%', height: '100%'}} src = {this.state.image}/></a>
 				<br/>

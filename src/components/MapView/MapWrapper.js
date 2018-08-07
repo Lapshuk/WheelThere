@@ -25,8 +25,10 @@ export default class MapWrapper extends Component {
       this.togglePinAddModal = this.togglePinAddModal.bind(this);
       this.togglePinInfoModal = this.togglePinInfoModal.bind(this);
       this.setActiveLatLng = this.setActiveLatLng.bind(this);
+      this.turnOffModals = this.turnOffModals.bind(this);
       this.add_id = this.add_id.bind(this);
       this.state={
+        getAllPins: props.getAllPins,
         ref: props.mapRef,
         pid: '',
         shouldDisplay: false,
@@ -37,6 +39,13 @@ export default class MapWrapper extends Component {
         lon: EIFFEL_TOWER_POSITION.lon,
         latlngmap: {} //empty hashmap
       }
+    }
+    turnOffModals(){
+      this.setState({
+        shouldDisplay: false,
+        pinAddModal: false,
+        pinInfoModal: false,
+      });
     }
     get_key(lat, lng){
       var newLat = lat.toFixed(7);
@@ -82,6 +91,7 @@ export default class MapWrapper extends Component {
         pinInfoModal: false,
       });
     }
+
     togglePinInfoModal(lat, lon){
       var key = this.get_key(lat, lon);
       this.setState({
@@ -110,7 +120,7 @@ export default class MapWrapper extends Component {
           window.initMap = this.initMap;
           window.initMap = this.initMap.bind(this);
           // Asynchronously load the Google Maps script, passing in the callback reference
-          loadJS('https://maps.googleapis.com/maps/api/js?key=AIzaSyD3bt6opXtgKxFUYVtlkjymkQTjxXZRWic&libraries=places&callback=initMap')
+          loadJS('https://maps.googleapis.com/maps/api/js?key=AIzaSyBF8sBdmPVq8rSP6jol16qMXi9YciJybgs&libraries=places&callback=initMap')
       }
       
       initMap() {
@@ -149,13 +159,56 @@ export default class MapWrapper extends Component {
             self_reference.togglePinAddModal();
             return false;
           });
+          var input = document.getElementById('place-input');
+          var searchBox = new window.google.maps.places.SearchBox(input);
+
+          map.addListener('bounds_changed', function() {
+                searchBox.setBounds(map.getBounds());
+          });
+          searchBox.addListener('places_changed', function() {
+             var places = searchBox.getPlaces();
+             if (places.length == 0) {
+               return;
+             }
+             // For each place, get the icon, name and location.
+             var bounds = new window.google.maps.LatLngBounds();
+             places.forEach(function(place) {
+               if (!place.geometry) {
+                 console.log("Returned place contains no geometry");
+                 return;
+               }
+
+               if (place.geometry.viewport) {
+                 // Only geocodes have viewport.
+                 bounds.union(place.geometry.viewport);
+               } else {
+                 bounds.extend(place.geometry.location);
+               }
+             });
+             map.fitBounds(bounds);
+             console.log(places);
+          });
           this.getAllPins();
       }
       render() {
           return (
               <div ref="map" style={{height: '100%', width: '100%'}}>
-                  <AddPin shouldDisplay= {this.state.shouldDisplay} modal={this.state.pinAddModal} add_id = {this.add_id} tripId={this.state.tripId} lat={this.state.lat} lon = {this.state.lon} ref = "addPin"/>
-                  <PinInfo ref = 'pinInfoModal' id = 'pinInfoModal' shouldDisplay= {this.state.shouldDisplay}  pid = {this.state.pid} modal={this.state.pinInfoModal} ref = "addPin"/>
+                  <AddPin 
+                    turnOffModals = {this.turnOffModals} 
+                    getAllPins = {this.state.getAllPins} 
+                    shouldDisplay= {this.state.shouldDisplay} 
+                    modal={this.state.pinAddModal} 
+                    add_id = {this.add_id} 
+                    tripId={this.state.tripId} 
+                    lat={this.state.lat} 
+                    lon = {this.state.lon} 
+                    />
+                    
+                  <PinInfo 
+                    shouldDisplay = {this.state.shouldDisplay}
+                    pid = {this.state.pid} 
+                    modal={this.state.pinInfoModal} 
+                    />
                </div>
           );
       }
