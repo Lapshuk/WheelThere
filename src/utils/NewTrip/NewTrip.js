@@ -24,7 +24,7 @@ export default class NewTrip extends Component {
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleFileChange = this.handleFileChange.bind(this);
-    // 0ry0EHh62ST3HpyeoJem9xb2yyK2
+    this.submitAndRedirect = this.submitAndRedirect.bind(this);
   };
 
   handleFileChange = (event) => {
@@ -43,10 +43,12 @@ export default class NewTrip extends Component {
     var imgRefPath = 'trips/' + tripId + "/" + "main" + ".jpg";
     var dbImageRef = storageRef.child(imgRefPath);
     dbImageRef.put(image).then(rec => {
+      console.log(rec);
       rec.ref.getDownloadURL().then(url => {
         this.setState({
           image: url
         });
+        this.setImageInTripDb(tripId);
       });
     });
 
@@ -62,10 +64,9 @@ export default class NewTrip extends Component {
   };
 
   //post trip to the storage
-  postTrip = (event) => {
+  postTrip = (event, callback) => {
     event.preventDefault();
     event.stopPropagation();
-
     //referencing trips database
     const db = firebase.firestore();
     var tripsRef = db.collection('trips');
@@ -75,9 +76,11 @@ export default class NewTrip extends Component {
       owner_id: this.state.ownerId,
       pins: [],
       stars: this.state.stars,
+      image : null
     }).then(function (trip) {
       //setting tripId and call back function is to push image to cloud
-      _this.postImageToCloud(trip.id, _this.state.image_file, () => _this.setImageInTripDb(trip.id));
+      _this.postImageToCloud(trip.id, _this.state.image_file);
+
       _this.setState({
         tripId: trip.id
       });
@@ -91,24 +94,31 @@ export default class NewTrip extends Component {
         //updating the list of my_trips
         userRef.update({
           my_trips: tripsList
+        }).then(() => {
+          if(typeof callback == 'function') {
+            callback();
+          };
         });
       });
+    });
 
-    }).then(() => {
-      window.location.assign('/mapview/' + _this.state.tripId);
+  };
+
+  submitAndRedirect = (event)=>{
+    this.postTrip(event,() => {
+      window.location.assign('/mapview/'+this.state.ownerId);
     });
   };
 
-
   render() {
     return (
-        <Form onSubmit={this.postTrip}>
+        <Form onSubmit={this.submitAndRedirect}>
           <FormGroup>
             <Label for="tripName">Trip Name</Label>
             <Input type="name" name="name" id="tripName" onChange={this.handleNameChange}/>
           </FormGroup>
           <FormGroup>
-            <Label for="file">File</Label>
+            <Label for="file">Choose Main Image</Label>
             <Input type="file" name="file" id="file" onChange={this.handleFileChange}/>
           </FormGroup>
           <Button>Submit</Button>
