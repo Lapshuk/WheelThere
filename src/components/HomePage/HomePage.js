@@ -40,8 +40,8 @@ export default class HomePage extends Component {
   componentDidMount() {
 
     const db = firebase.firestore();
-    let popQuery = db.collection('trips').where('stars', '==', 5);
-    let restQuery = db.collection('trips').where('stars', '<', 5);
+    let popQuery = db.collection('trips').where('stars', '>=', 4.5);
+    let restQuery = db.collection('trips').where('stars', '<', 4.5);
     this.pinRef = db.collection('pins');
 
     let tempPopTrips = {};
@@ -79,17 +79,18 @@ export default class HomePage extends Component {
   }
 
   getAllPins(category, tripId) {
+        let trip = firebase.firestore().collection('trips').doc(tripId);
         let pins = this.getTrips(category)[tripId].pins;
         let rate = 0;
+        this.state.pins = {}; //TODO: don't clear this in future.
         for (let i = 0; i < pins.length; i++){
           this.pinRef.doc(pins[i]).get().then((rec)=>{
             let p = rec.data();
-            let avgRate = (parseInt(p.transport)+ parseInt(p.fun) + parseInt(p.rollability) + parseInt(p.bathroom)) / 4;
-            rate += avgRate;
-            this.state.pins[rec.id] = {description: p.description, rate: avgRate, image: p.image};
+            this.state.pins[rec.id] = {description: p.description, image: p.image};
             if (pins.length === Object.keys(this.state.pins).length){
-              rate /= pins.length;
-              this.setState({targetIdRate: true, targetRate: rate});
+              trip.get().then(data =>{
+                this.setState({targetIdRate: true, targetRate: data.data().stars});
+              });
             }
           });
         }
@@ -100,14 +101,12 @@ export default class HomePage extends Component {
     return <Collapse className='map-collapse' isOpen={this.state.collapse}>
             <Row className='map-collapse-content shadow'>
               <div>{this.state.targetId ? category[this.state.targetId].name : ""}</div>
-              <Container>
+              <Container className='collapse-container'>
                 <MiniPin pins={this.state.pins}/>
-                <Row>
-                  <Col sm='2'>
-                    <Button outline color="success"><a href={"/mapview/" + this.state.targetId}> Explore </a></Button>
-                  </Col>
-                  <Col sm='2'>
-                    <div> Ratings: {this.state.targetRate} </div>
+                <Row className='topPadding'>
+                  <Col className='list-inline' sm='3'>
+                    <Button className='list-inline' outline color="success"><a href={"/mapview/" + this.state.targetId}> Explore </a></Button>
+                    <div className='list-inline' > Accessibility Ratings: {this.state.targetRate} </div>
                   </Col>
                 </Row>
               </Container>
