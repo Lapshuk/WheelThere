@@ -177,7 +177,6 @@ export default class MapWrapper extends Component {
                  console.log("Returned place contains no geometry");
                  return;
                }
-
                if (place.geometry.viewport) {
                  // Only geocodes have viewport.
                  bounds.union(place.geometry.viewport);
@@ -186,7 +185,10 @@ export default class MapWrapper extends Component {
                }
              });
              map.fitBounds(bounds);
-             console.log(places);
+             var latlng = map.getCenter();
+             self_reference.setActiveLatLng(latlng.lat(), latlng.lng());
+             self_reference.createMarker(latlng); 
+             self_reference.togglePinAddModal();
           });
           this.getAllPins();
       }
