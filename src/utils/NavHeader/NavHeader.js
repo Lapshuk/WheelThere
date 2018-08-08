@@ -18,13 +18,18 @@ import * as firebase from "firebase";
 export default class NavHeader extends Component {
   constructor() {
     super();
-    this.toggleMapModal = this.toggleMapModal.bind(this);
+    this.initMapModal = this.initMapModal.bind(this);
+    this.turnOffModal = this.turnOffModal.bind(this);
     this.state = {
       modal: false
     }
   }
-
-  toggleMapModal(e) {
+  turnOffModal(){
+    this.setState({
+      modal: false
+    })
+  }
+  initMapModal(e) {
     e.preventDefault();
     this.setState({
       modal: true
@@ -56,7 +61,7 @@ export default class NavHeader extends Component {
                   <Input className="searchBar" type="search" name="searc" id="searchBar" placeholder="search"/>
                 </NavItem>
                 <NavItem>
-                  <NavLink onClick={this.toggleMapModal}>Add map</NavLink>
+                  <NavLink href= "/" onClick={this.initMapModal}>Add map</NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink>Messages</NavLink>
@@ -89,7 +94,7 @@ export default class NavHeader extends Component {
                       ? <div>
                         <NavItem>
                           <NavLink onClick={() => firebase.auth().signOut()}>Sign Out</NavLink>
-                          <AddMap modal={this.state.modal} userId={authUser.uid}/>
+                          <AddMap turnOffModal = {this.turnOffModal} modal={this.state.modal} userId={authUser.uid}/>
                         </NavItem>
                       </div>
                       : <NavItem>
