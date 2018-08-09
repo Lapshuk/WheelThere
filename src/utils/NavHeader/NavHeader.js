@@ -30,6 +30,8 @@ class NavHeader extends Component {
     super();
     this.initMapModal = this.initMapModal.bind(this);
     this.turnOffModal = this.turnOffModal.bind(this);
+    this.addMapAndResetVoiceCmd = this.addMapAndResetVoiceCmd.bind(this);
+    this.myAccountAndResetVoiceCmd = this.myAccountAndResetVoiceCmd.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.goHome = this.goHome.bind(this);
     this.state = {
@@ -45,14 +47,14 @@ class NavHeader extends Component {
 
   initMapModal(e) {
     e.preventDefault();
-    this.addMapAndResetVoiceCmd = this.addMapAndResetVoiceCmd.bind(this);
-    this.myAccountAndResetVoiceCmd = this.myAccountAndResetVoiceCmd.bind(this);
-
+    this.setState({
+      modal: true
+    });
   }
 
   toggleMapModal() {
     //e.preventDefault();
-    console.log("MAPPP");
+    console.log("called");
     this.setState({
       modal: true
     });

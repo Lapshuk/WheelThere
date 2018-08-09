@@ -44,7 +44,7 @@ export default class ImageBox extends Component {
     )
 
     return (
-      <div id="ImageBox">
+      <div href = '/' id="ImageBox">
         <Row className={activeImgRow}>
         {tripList}
         </Row>
