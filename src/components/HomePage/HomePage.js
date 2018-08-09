@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component} from 'react';
 import {Container, Row, Col, Button, Collapse} from 'reactstrap';
 import '../../App.css';
 import ImageBox from "../../utils/ImageBox/ImageBox";
@@ -6,6 +6,7 @@ import MiniPin from "../../utils/MiniPin/MiniPin";
 import NavHeader from '../../utils/NavHeader/NavHeader';
 import './HomePage.css';
 import * as firebase from "firebase";
+
 
 
 export default class HomePage extends Component {
@@ -117,8 +118,8 @@ export default class HomePage extends Component {
           </Collapse>;
   }
 
-  render() {
 
+  render() {
     let container = null;
     if (!this.state.loaded) {
       container = <Container><img src={require('../../imgs/loader.svg')} alt=''/></Container>
@@ -151,3 +152,4 @@ export default class HomePage extends Component {
     );
   }
 }
+

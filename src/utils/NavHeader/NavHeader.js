@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import SpeechRecognition from 'react-speech-recognition'
 import AddMap from '../AddMap/AddMap'
 import {
   Navbar,
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
+  Button
 } from 'reactstrap';
 
 import {Input} from 'reactstrap';
@@ -15,20 +18,41 @@ import $ from 'jquery';
 import AuthUserContext from '../../components/auth/AuthUserContext';
 import * as firebase from "firebase";
 
-export default class NavHeader extends Component {
+const propTypes = {
+  // Props injected by SpeechRecognition
+  transcript: PropTypes.string,
+  resetTranscript: PropTypes.func,
+  browserSupportsSpeechRecognition: PropTypes.bool
+};
+
+class NavHeader extends Component {
   constructor() {
     super();
     this.toggleMapModal = this.toggleMapModal.bind(this);
     this.state = {
       modal: false
     }
-  }
+    this.addMapAndResetVoiceCmd = this.addMapAndResetVoiceCmd.bind(this);
+    this.myAccountAndResetVoiceCmd = this.myAccountAndResetVoiceCmd.bind(this);
 
-  toggleMapModal(e) {
-    e.preventDefault();
+    }
+
+  toggleMapModal() {
+    //e.preventDefault();
+    console.log("MAPPP");
     this.setState({
       modal: true
     });
+  }
+
+  addMapAndResetVoiceCmd(reset){
+    this.toggleMapModal();
+    reset()
+  }
+
+  myAccountAndResetVoiceCmd(reset, user){
+    window.location.assign("/myaccount/" + user.uid);
+    reset()
   }
 
   getUserName = (curUserId) => {
@@ -43,14 +67,22 @@ export default class NavHeader extends Component {
 
     render()
     {
+      const {transcript, resetTranscript, listening, startListening, stopListening, browserSupportsSpeechRecognition } = this.props;
+
+
+      if (!browserSupportsSpeechRecognition) {
+        return null
+      }
+
       return (
-          <div>
+
             <Navbar className="drop-shadow" color="light" light expand="md">
               <NavbarBrand href="/" className="mr-auto">
                 <img style={{width: '30px', height: '30px'}}
                      src="https://s3-us-west-2.amazonaws.com/badhorserecords/WheelthereIcon2.png"/>
                 wheelthere
               </NavbarBrand>
+              {transcript.search("map") < 0 ? "" : this.addMapAndResetVoiceCmd(resetTranscript)}
               <Nav navbar>
                 <NavItem>
                   <Input className="searchBar" type="search" name="searc" id="searchBar" placeholder="search"/>
@@ -61,10 +93,10 @@ export default class NavHeader extends Component {
                 <NavItem>
                   <NavLink>Messages</NavLink>
                 </NavItem>
-
                 <AuthUserContext.Consumer>
                   {authUser => authUser
                       ? <NavItem>
+                        {transcript.search("account") < 0 ? "" : this.myAccountAndResetVoiceCmd(resetTranscript,authUser)}
                         <NavLink href={"/myaccount/" + authUser.uid}>Account</NavLink>
                       </NavItem>
                       : <NavItem></NavItem>
@@ -101,10 +133,12 @@ export default class NavHeader extends Component {
 
               </Nav>
             </Navbar>
-          </div>
+
 
       );
     }
 }
+NavHeader.propTypes = propTypes;
+export default SpeechRecognition(NavHeader);
 
 

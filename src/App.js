@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-
 import HomePage from "./components/HomePage/HomePage.js"
 import MapView from "./components/MapView/MapView.js"
 import MyAccount from "./components/MyAccount/MyAccount.js"
@@ -28,6 +27,8 @@ const Home = () => (
     </div>
 );
 
+
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -39,6 +40,7 @@ class App extends Component {
 
 
   render() {
+
     return (
         <BrowserRouter>
           <div className="App">
