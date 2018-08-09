@@ -17,6 +17,8 @@ export default class ImageBox extends Component {
 
     this.setActive = this.setActive.bind(this);
     this.trips = this.props.trips;
+    console.log("TRIPS IN CONSTRUCTOR");
+    console.log(this.trips);
     this.overflow = this.props.overflow;
   }
 
@@ -41,7 +43,10 @@ export default class ImageBox extends Component {
         </div>
         <div className='image-title'>{this.trips[key].name}</div>
       </Col>
-    )
+    );
+
+
+
 
     return (
       <div href = '/' id="ImageBox">

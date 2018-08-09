@@ -14,22 +14,32 @@ export default class MyTrips extends Component {
       myTrips : [],
       loaded: false,
       collapse: false,
+      myTripsObjects : {}
     };
   }
 
   componentDidMount() {
     //db querying
-    const db = firebase.firestore();
-    //getting all users
-    var userRef = db.collection('users');
+    const userRef = firebase.firestore().collection('users');
+    var tripsRef = firebase.firestore().collection('trips');
+    let trip = "";
     //getting the list of trips
     userRef.doc(this.state.userId).get().then(user => {
-      this.setState({
-        myTrips : user.data().my_trips,
-        loaded : true
-      });
+      for(trip of user.data().my_trips){
+        tripsRef.doc(trip).get().then(t => {
+          this.state.myTripsObjects[trip] = t.data();
+          // if (user.data().my_trips.length == this.state.myTripsObjects) {
+          //   this.setState({
+          //     loaded : true
+          //   });
+          // }
+        });
+      };
+
     });
   };
+
+
 
   render() {
 
@@ -61,8 +71,9 @@ export default class MyTrips extends Component {
     //
     // }
     return (
-        <div id='HomePage'>
-          My Trips
+        <div>
+          <ImageBox trips={this.state.myTripsObjects}/>
+          HHHHHH
         </div>
     );
   }

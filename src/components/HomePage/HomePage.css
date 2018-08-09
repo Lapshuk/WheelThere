@@ -8,6 +8,10 @@
     /*width: 100%;*/
 }
 
+.city-name{
+    margin-left: 1.3vw;
+}
+
 
 .horizontal-scroll .row {
      flex-wrap: inherit;
@@ -27,6 +31,8 @@
 
 .collapse-container {
     position: relative;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .topPadding {

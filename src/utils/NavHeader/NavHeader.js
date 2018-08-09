@@ -53,8 +53,6 @@ class NavHeader extends Component {
   }
 
   toggleMapModal() {
-    //e.preventDefault();
-    console.log("called");
     this.setState({
       modal: true
     });
@@ -102,6 +100,7 @@ class NavHeader extends Component {
 
     return (
         <div>
+          {resetTranscript}
           {transcript.search("home") < 0 ? "" : this.goHome(resetTranscript)}
           <Navbar className="drop-shadow" color="light" light expand="md">
             <NavbarBrand href="/" className="mr-auto">
@@ -113,14 +112,23 @@ class NavHeader extends Component {
               <NavItem>
                 <Input className="searchBar" type="search" name="search" id="searchBar" placeholder="search"/>
               </NavItem>
-              <NavItem>
-                <NavLink href="/" onClick={this.initMapModal}>Add map</NavLink>
-                {transcript.search("map") < 0 ? "" : this.addMapAndResetVoiceCmd(resetTranscript)}
-                {transcript.search("close") < 0 ? "" : this.closeModal(resetTranscript)}
-              </NavItem>
-              <NavItem>
-                <NavLink>Messages</NavLink>
-              </NavItem>
+              <AuthUserContext.Consumer>
+                {authUser => authUser
+
+                    ? <NavItem>
+                      <NavLink href="/" onClick={this.initMapModal}>Add map</NavLink>
+                      {transcript.search("map") < 0 ? "" : this.addMapAndResetVoiceCmd(resetTranscript)}
+                      {transcript.search("close") < 0 ? "" : this.closeModal(resetTranscript)}
+                    </NavItem>
+                    : null}
+              </AuthUserContext.Consumer>
+              <AuthUserContext.Consumer>
+                {authUser => authUser
+                    ? <NavItem>
+                      <NavLink>Messages</NavLink>
+                    </NavItem>
+                    : null}
+              </AuthUserContext.Consumer>
 
               <AuthUserContext.Consumer>
                 {authUser => authUser
@@ -128,7 +136,7 @@ class NavHeader extends Component {
                       {transcript.search("account") < 0 ? "" : this.myAccountAndResetVoiceCmd(resetTranscript, authUser)}
                       <NavLink href={"/myaccount/" + authUser.uid}>Account</NavLink>
                     </NavItem>
-                    : <NavItem></NavItem>
+                    : null
                 }
               </AuthUserContext.Consumer>
 
@@ -164,6 +172,7 @@ class NavHeader extends Component {
     );
   }
 }
+
 NavHeader.propTypes = propTypes;
 export default SpeechRecognition(NavHeader);
 

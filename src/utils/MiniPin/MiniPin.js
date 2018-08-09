@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Col, Row } from 'reactstrap';
+import { Col, Row, Container } from 'reactstrap';
 import '../../App.css';
 import './MiniPin.css';
 
@@ -18,15 +18,15 @@ export default class ImageBox extends Component {
   render() {
 
     const pinList = Object.keys(this.pins).map(key =>
-      <Col sm='3' className='pin-col' key={key} data-id={key}>
+
         <img className='pin-box' src={this.pins[key].image} alt=''/>
-      </Col>
+
     );
 
     return (
-      <Row id="MiniPin">
+      <Container id="MiniPin" className="flex-container">
         {pinList}
-      </Row>
+      </Container>
     );
   }
 }

@@ -101,7 +101,7 @@ export default class HomePage extends Component {
   getCollapsable(category) {
     return <Collapse className='map-collapse' isOpen={this.state.collapse}>
             <Row className='map-collapse-content shadow'>
-              <div>{this.state.targetId ? category[this.state.targetId].name : ""}</div>
+              <div className='city-name'>{this.state.targetId ? category[this.state.targetId].name : ""}</div>
               <Container className='collapse-container'>
                 <MiniPin pins={this.state.pins}/>
                 <Row className='topPadding'>
