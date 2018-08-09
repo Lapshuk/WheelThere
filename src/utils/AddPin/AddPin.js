@@ -252,21 +252,25 @@ export default class AddPin extends Component {
           <FormGroup>
             <FormGroup>
 
-              <Label for="Access">Accessibility</Label>
+              <Label for="Access">Total accessibility</Label>
               <Input type="Number" name="text" id="fun" placeholder="Fun" value={this.state.fun}
                      onChange={this.handleFunChange}/>
             </FormGroup>
             <FormGroup>
+              <Label for="Access">Bathroom Accessibility</Label>
 
               <Input type="Number" name="text" id="bathroom" placeholder="Bathroom" value={this.state.bathroom}
                      onChange={this.handleBathroomChange}/>
             </FormGroup>
             <FormGroup>
+              <Label for="Access">Rollability</Label>
 
               <Input type="Number" name="text" id="rollability" placeholder="Rollability"
                      value={this.state.rollability} onChange={this.handleRollabilityChange}/>
             </FormGroup>
             <FormGroup>
+               <Label for="Access">Transport quality</Label>
+
               <Input type="Number" name="text" id="transport" placeholder="Transport" value={this.state.transport}
                      onChange={this.handleTransportChange}/>
             </FormGroup>
