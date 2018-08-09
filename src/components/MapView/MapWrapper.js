@@ -37,7 +37,8 @@ export default class MapWrapper extends Component {
         pinInfoModal: false,
         lat: EIFFEL_TOWER_POSITION.lat,
         lon: EIFFEL_TOWER_POSITION.lon,
-        latlngmap: {} //empty hashmap
+        latlngmap: {}, //empty hashmap,
+        map: map
       }
     }
     turnOffModals(){
@@ -100,6 +101,7 @@ export default class MapWrapper extends Component {
         pinAddModal: false,
         pinInfoModal: true
       });
+      map.setCenter(new window.google.maps.LatLng(lat, lon));
     }
     createMarker(latLng){
         //used in the reres function;
@@ -112,6 +114,7 @@ export default class MapWrapper extends Component {
 
       marker.addListener('click', function(evt){
         self_reference.togglePinInfoModal(marker.position.lat(), marker.position.lng()); 
+        map.setCenter(marker.position);
       });
     }
     componentDidMount() {
@@ -124,7 +127,6 @@ export default class MapWrapper extends Component {
       }
       
       initMap() {
-
           map = new window.google.maps.Map(this.refs.map, {
             center: EIFFEL_TOWER_POSITION,
             zoom: 16
@@ -177,7 +179,6 @@ export default class MapWrapper extends Component {
                  console.log("Returned place contains no geometry");
                  return;
                }
-
                if (place.geometry.viewport) {
                  // Only geocodes have viewport.
                  bounds.union(place.geometry.viewport);
@@ -186,7 +187,10 @@ export default class MapWrapper extends Component {
                }
              });
              map.fitBounds(bounds);
-             console.log(places);
+             var latlng = map.getCenter();
+             self_reference.setActiveLatLng(latlng.lat(), latlng.lng());
+             self_reference.createMarker(latlng); 
+             self_reference.togglePinAddModal();
           });
           this.getAllPins();
       }

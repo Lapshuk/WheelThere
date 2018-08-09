@@ -7,18 +7,23 @@ export default class AddMap extends React.Component {
     super(props);
     this.state = {
       userId: props.userId,
-      modal: props.modal
+      modal: props.modal,
+      turnOffModal: props.turnOffModal
     };
     this.toggle = this.toggle.bind(this);
   }
 
   toggle() {
     this.setState({
-      modal: !this.state.modal
+      modal: false,
     });
+    this.state.turnOffModal();
   }
   componentWillReceiveProps(newProps) {
-      this.setState({modal: newProps.modal});
+    this.setState(
+    {
+        modal: newProps.modal
+    });
   }
   render() {
     return (

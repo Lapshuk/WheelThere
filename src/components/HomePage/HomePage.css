@@ -25,3 +25,17 @@
     height: 200px;
 }
 
+.collapse-container {
+    position: relative;
+}
+
+.topPadding {
+    bottom: 0px;
+    position: absolute;
+    display: inline;
+}
+
+.list-inline {
+    display: inline;
+}
+
